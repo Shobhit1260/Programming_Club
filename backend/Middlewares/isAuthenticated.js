@@ -3,6 +3,7 @@ const dotenv=require("dotenv");
 const User=require("../Models/user");
 exports.isAuthenticated=async(req,res,next)=>{
     const {tkn}=req.cookies;
+    console.log("tkn",tkn);
     if(!tkn){
         return res.status(404).json({
             success:false,

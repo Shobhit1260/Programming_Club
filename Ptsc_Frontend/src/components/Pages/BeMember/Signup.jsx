@@ -1,4 +1,4 @@
-import React from 'react';
+import {React,useState} from 'react';
 import { useForm } from "react-hook-form";
 
 function BeMember() {
@@ -9,10 +9,41 @@ function BeMember() {
     reset
   } = useForm();
 
+
   const onSubmit = async (data) => {
     await new Promise((resolve) => setTimeout(resolve, 4000));
-    console.log(data);
-    reset();
+    try{
+      const res=await fetch("http://localhost:4000/v1/SignUp",{
+        method:"POST",
+        headers:{
+          "content-type":"application/json",
+        },
+        credentials: "include",
+        body:JSON.stringify({
+           firstName:data.firstName,
+           lastName:data.lastName,
+           userName:data.userName,
+           email:data.email,
+           password:data.password,
+           mobile:data.mobile,
+        })
+      });
+      console.log(res);
+      const formData=await res.json();
+      console.log(formData);
+      if(res.ok){
+         console.log("formData:",formData);
+      }
+      else{
+        alert("signUp Unsuccessfull");
+      }
+      
+    }
+    catch(error){
+        console.log("error while signingUp",error);
+    }
+    // console.log(data);
+    // reset();
   };
 
   return (

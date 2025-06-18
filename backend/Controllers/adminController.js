@@ -1,6 +1,7 @@
 const mongoose=require("mongoose");
 const User=require("../Models/user.js")
 const {sendToken}=require("../Utils/sendToken")
+const Event = require("../Models/event.js");
 
 exports.SignUp=async(req,res)=>{
   try{
@@ -160,4 +161,23 @@ exports.logout=async(req,res)=>{
   catch{
     res.status(500).json({ message: "internal server error" });
   }
+}
+
+exports.createEvent=async(req,res)=>{
+     const {title,description,date,status}=req.body;
+     const event = await Event.create({title,description,date,status});
+     res.status(200).json({
+       success:true,
+       event,
+       message:"event created succesfully",
+     })
+}
+
+exports.fetchEvent=async(req,res)=>{
+   const events=await Event.find();
+   res.status(200).json({
+      success:true,
+      events:events.length,
+      message:"events are successfully fetched."
+   })
 }
