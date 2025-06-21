@@ -11,7 +11,7 @@ import Leaderboard from './components/Pages/Leaderboard.jsx';
 import ContactUs from './components/Pages/ContactUs';
 import Signup from './components/Pages/BeMember/Signup.jsx';
 import Login from './components/Pages/BeMember/Login.jsx';
-import Approved_Member from './components/Admin/Members/Approved_Member.jsx'
+// import Approved_Member from './components/Admin/Members/Approved_Member.jsx'
 import Navbar from './components/Navbar.jsx';
 import BeMember from './components/Pages/BeMember/Signup.jsx';
 import Admin from './components/Admin/Admin_Page.jsx'
@@ -19,7 +19,7 @@ import Admin_Team from './components/Admin/Team/Admin_TeamMember.jsx'
 import Admin_Event from './components/Admin/Event/Admin_Event.jsx';
 import Admin_Resource from './components/Admin/Resource/Admin_Resource.jsx'
 import Admin_LeaderBoard from './components/Admin/LeaderBoard/Admin_LeaderBoard.jsx'
-import Admin_Member from './components/Admin/Members/Approved_Member.jsx'
+import GetAll_Pendings from './components/Admin/Members/GetAll_Pendings.jsx'
 import Admin_TeamMember from './components/Admin/Team/Admin_TeamMember.jsx';
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
          <Route  path="/event" element={<Events/>}/>
          <Route  path="/leaderboard" element={<Leaderboard/>}/>
          <Route  path="/team" element={<Team/>}/>
-         <Route  path="/beMember" element={<BeMember/>}/>
+         <Route  path="/Login" element={<Login/>}/>
          <Route path="/resource" element={<Resources />}>
             <Route index element={<Resource/>} />
             <Route path="resource" element={<Resource />} />
@@ -44,7 +44,7 @@ function App() {
          <Route index element={<Admin_Event/>}/>
          <Route  path="admin_event" element={<Admin_Event/>}/>
          <Route path="admin_team" element={<Admin_TeamMember/>}/>
-          <Route path="admin_members" element={<Approved_Member/>}/>
+          <Route path="admin_pendingmembers" element={<GetAll_Pendings/>}/>
          <Route path="admin_resources" element={<Admin_Resource/>}/>
          <Route path="admin_leaderboard" element={<Admin_LeaderBoard/>}/>
         </Route>   

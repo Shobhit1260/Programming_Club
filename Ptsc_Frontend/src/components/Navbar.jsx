@@ -14,7 +14,7 @@ function Navbar() {
   };
 
   return (
-    <div className='fixed top-0 z-50 w-full dark:border-b-2 dark:border-gray-600 bg-white/80 dark:bg-gray-800 shadow-lg font-sans'>
+    <div className='fixed  z-80 w-full dark:border-b-2 dark:border-gray-600 bg-white dark:bg-gray-800 shadow-lg font-sans'>
       <div className='h-[80px] flex justify-between items-center px-6 py-4'>
         <div className='flex gap-2 items-center'>
           <img
@@ -39,7 +39,7 @@ function Navbar() {
           <Link to="/resource">Resources</Link>
           <Link to="/leaderboard">Leaderboard</Link>
           <Link to="/contactUs">Contact</Link>
-          <Link to="/beMember">Be Member</Link>
+          <Link to="/Login">Be Member</Link>
           <Link to="/admin">Admin</Link>
           <button className='text-xl self-start' onClick={toggleTheme}>{
             (isDark ?<MdDarkMode />:<MdOutlineLightMode />)}

@@ -2,27 +2,31 @@ const jwt=require("jsonwebtoken");
 const dotenv=require("dotenv");
 const User=require("../Models/user");
 exports.isAuthenticated=async(req,res,next)=>{
-    const {tkn}=req.cookies;
-    console.log("tkn",tkn);
-    if(!tkn){
-        return res.status(404).json({
-            success:false,
-            message:"token not found"
+    try{
+    const token=req.cookies.token;
+    console.log("Token from cookie:", token);
+    if(!token){
+        return res.status(401).json({
+            success:"Authentication token not found in cookies",
         })
     }
     try{
-    const decoded=jwt.verify(tkn,process.env.SECRET_KEY);
+    const decoded=jwt.verify(token,process.env.SECRET_KEY);
     req.user=await User.findById(decoded.id);
     console.log("user authenticated:",req.user);
     next();
     }
     catch(error){
-        console.log("error while authenticating:",error);
-        return res.status(401).json({
+        console.error("JWT verification error:", error);
+        return res.status(500).json({
             success:false,
-            message:"token is not valid"
+            message:"Internal Server error while authentication."
         })
 
     }
+}
+catch(error){
+    console.error("Error while authentication",error);
+}
 
 }

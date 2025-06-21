@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import {useState} from 'react'
 
 function NewEvent() {
-  const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDkxY2VjMDFmYTk3OTJjMDJmOGI4MiIsImlhdCI6MTc1MDIzMjMyMiwiZXhwIjoxNzUyODI0MzIyfQ.QF5JyksASiAvmu1fdVSFZKy0gxJwlJRkYrQTqKoAVVw";
   const [events,setEvents]=useState([]);
   const [formData,setFormData]=useState({
     title:"",
@@ -11,16 +10,8 @@ function NewEvent() {
     date:"",
     status:"Upcoming"
   })
-  const fetchData=async()=>{
-    const res=await fetch("http://localhost:4000/v1/fetchEvent");
-    const data= await res.json();
-    setEvents(data);
-  }
-  useEffect(()=>{
-    fetchData();
-  }
-  ,[])
-   const handleFormData=(e)=>{
+
+  const handleFormData=(e)=>{
     setFormData({
       ...formData,
         [e.target.name]:e.target.value,
@@ -32,14 +23,13 @@ function NewEvent() {
         method:"POST",
         headers:{
           "content-type":"application/json",
-          // "Authorization": `Bearer ${token}`
         },
         credentials:"include",
         body:JSON.stringify(formData)
       });
       const newEvent=await res.json();
       console.log("newEvent",newEvent);
-      setEvents([newEvent,...events]);
+      setEvents([newEvent.event,...events]);
       setFormData({
         title:"",
         description:"",
@@ -72,7 +62,7 @@ function NewEvent() {
             className='text-gray-600 p-2 rounded-lg border-2 border-gray-600 outline-none'/>
           
           <input 
-            type="text" 
+            type="date" 
             name="date"
             value={formData.date}
             onChange={handleFormData}  

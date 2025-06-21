@@ -2,19 +2,32 @@ const mongoose=require("mongoose");
 const User=require("../Models/user.js")
 const {sendToken}=require("../Utils/sendToken")
 const Event = require("../Models/event.js");
+const MemberProfile=require("../Models/memberProfile.js")
 
 exports.SignUp=async(req,res)=>{
   try{
-    const{email,password,username}=req.body; 
-    const member= await User.create({username,email,password});
-    res.status(200).json({
+    const{firstName,lastName,email,password,username,mobile}=req.body; 
+    const duplicateEmailUser=await User.findOne({email});
+    if(duplicateEmailUser){
+      return res.status(409).json({
+        success:false,
+        message:"Email already Exists."
+      })
+    }
+    const duplicateUsernameUser=await User.findOne({username});
+    if(duplicateUsernameUser){
+      return res.status(409).json({
+        success:false,
+        message:"Same UserName already Exists."
+      })
+    }
+    const member= await User.create({firstName,lastName,email,password,username,mobile});
+    res.status(201).json({
       success:true,
-      role:member.role,
-      message:"Signedup successfully! and login after 24 hrs."
+      message:"Registred successfully! and login after 24 hrs."
     }); 
     }
   catch(error){
-      console.log("error:",error);
       res.status(500).json({
           succes:false,
           error:error,
@@ -61,6 +74,7 @@ exports.approveUser = async (req, res) => {
   
      res.status(200).json({
           success: true,
+          
           message: "User approved to be a member",
         });
 
@@ -118,25 +132,25 @@ exports.deniedUser=async(req,res)=>{
 
 exports.Login=async(req,res)=>{
   try{
-    const{username,email,password}=req.body; 
+    const{email,password}=req.body; 
     const user=await User.findOne({email});
     if(!user){ 
       return res.status(400).json({
              success:false,
-             message:"username or password invalid"
+             message:"email or password not found"
     })
   }
     const isMatched=await user.matchPassword(password);
     if(!isMatched){
       return res.status(400).json({
         success:false,
-        message:"username or password invalid"
+        message:"email or password invalid"
       })  
     }
    if(user.status!=="approved" ){
     return res.status(400).json({
       success:false,
-      message:"you r not approved for a member "
+      message:"you are not approved member "
     })  
    }   
    sendToken(user,res,"member loggedin successfully!")
@@ -148,7 +162,7 @@ exports.Login=async(req,res)=>{
 
 exports.logout=async(req,res)=>{
   try{
-      res.clearCookie("tkn", {
+      res.clearCookie("token", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", 
         sameSite: "Strict",
@@ -164,20 +178,52 @@ exports.logout=async(req,res)=>{
 }
 
 exports.createEvent=async(req,res)=>{
+  try{
      const {title,description,date,status}=req.body;
+     const dulpEvent=await Event.findOne({title});
+     if(dulpEvent){
+      return res.status(409).json({
+        success:false,
+        message:"Duplicate title not allowed."
+      })
+     }
      const event = await Event.create({title,description,date,status});
      res.status(200).json({
        success:true,
        event,
        message:"event created succesfully",
      })
+    }
+    catch(error){
+      res.status(500).json({ message: "internal server error" });    
+    }
 }
 
-exports.fetchEvent=async(req,res)=>{
+exports.fetchEvents=async(req,res)=>{
+  try{
    const events=await Event.find();
    res.status(200).json({
       success:true,
-      events:events.length,
+      events:events,
       message:"events are successfully fetched."
    })
+  }
+  catch(error){
+      res.status(500).json({ message: "internal server error" });
+  }
+}
+
+exports.createMember=async(req,res)=>{
+  try{
+   const{name,role,imageUrl}=req.body;
+   const newMember=await MemberProfile.create({name,role,imageUrl});
+   res.status(201).json({
+        success:true,
+        newMember,
+        message:"member created succesfully",
+   })
+   }
+  catch(error){
+      res.status(500).json({ message: "internal server error" });  
+    }
 }
