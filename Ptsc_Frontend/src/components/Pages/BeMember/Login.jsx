@@ -31,7 +31,7 @@ function Login() {
       toast.success("Successfully logedin as a PTSC member.")
     else 
      toast.warning(formData.message);
-    // reset();
+    reset();
   };
  
   const [showForm, setShowForm] = useState(false);

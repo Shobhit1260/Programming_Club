@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const {SignUp,Login,getallpendings,getAllApprovedMembers,approveUser,deniedUser, logout, createEvent, fetchEvents, createMember} = require('../Controllers/adminController')
+const {SignUp,Login,getallpendings,getAllApprovedMembers,approveUser,deniedUser, 
+       logout, createEvent, fetchEvents, createMember, editEvent, deleteEvent, 
+       fetchMembers} = require('../Controllers/adminController');
+
 const {isAuthenticated} = require('../Middlewares/isAuthenticated');
 const  {authorizeRoles}=require('../Middlewares/isAuthorization');
 router.post("/SignUp",SignUp);
@@ -10,8 +13,11 @@ router.patch("/approveUser/:id",isAuthenticated,authorizeRoles("admin","member")
 router.delete("/deniedUser/:id",isAuthenticated,authorizeRoles("admin","member"),deniedUser);
 router.post("/Login",Login);
 router.get("/Logout",logout);
-router.post("/createEvent",isAuthenticated,authorizeRoles("admin","member"),createEvent);
+router.post("/createEvent",isAuthenticated,authorizeRoles("admin"),createEvent);
+router.patch("/editEvent/:id",isAuthenticated,authorizeRoles("admin"),editEvent);
+router.delete("/deleteEvent/:id",isAuthenticated,authorizeRoles("admin"),deleteEvent);
 router.get("/fetchEvents",fetchEvents);
+router.get("/fetchMembers",fetchMembers);
 router.post("/createMember",isAuthenticated,authorizeRoles("admin"),createMember);
 
 module.exports=router;

@@ -1,16 +1,16 @@
 import {createSlice} from "@reduxjs/toolkit";
+
 const initialState={
-    isEdit:false,
+    editingEventId:null,
 }
 export const eventSlice= createSlice({
    name:'event',
    initialState,
    reducers:{
-    toggleEdit:(state)=>{state.isEdit = !state.isEdit;},
-    setEditTrue:(state)=>{state.isEdit=true;},
-    setEditFalse:(state)=>{state.isEdit=false;},
+    setEditingEventId:(state,action)=>{state.editingEventId = action.payload;},
+    clearEditingEventId:(state)=>{state.editingEventId=null;}
    }
 })
 
-export const { toggleEdit,setEditTrue,setEditFalse}=eventSlice.actions;
+export const { setEditingEventId,clearEditingEventId}=eventSlice.actions;
 export default eventSlice.reducer;

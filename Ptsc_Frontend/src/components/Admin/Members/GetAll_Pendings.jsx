@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useState } from 'react'
 import MemberCard from './MemberCard'
 import {toast} from 'react-toastify'

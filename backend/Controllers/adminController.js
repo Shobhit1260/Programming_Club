@@ -74,7 +74,6 @@ exports.approveUser = async (req, res) => {
   
      res.status(200).json({
           success: true,
-          
           message: "User approved to be a member",
         });
 
@@ -199,12 +198,53 @@ exports.createEvent=async(req,res)=>{
     }
 }
 
+exports.editEvent=async(req,res)=>{
+  try{
+     const {title,description,date,status}=req.body;
+     const {id}=req.params;
+     const event = await Event.findByIdAndUpdate(id,{
+      $set:{title:title,description:description,date:date,status:status}
+     },
+     {new:true});
+     res.status(201).json({
+       success:true,
+       event,
+       message:"event edited succesfully",
+     })
+    }
+    catch(error){
+      res.status(500).json({ message: "internal server error" });    
+    }
+}
+
+exports.deleteEvent=async(req,res)=>{
+  try{
+     const {id}=req.params;
+     const event = await Event.findByIdAndDelete(id);
+      if (!event) {
+      return res.status(404).json({
+        success: false,
+        message: "Event not found",
+      });
+    }
+     res.status(200).json({
+       success:true,
+       event,
+       message:"event deleted succesfully",
+     })
+    }
+    catch(error){
+      res.status(500).json({ message: "internal server error" });    
+    }
+}
+
 exports.fetchEvents=async(req,res)=>{
   try{
    const events=await Event.find();
    res.status(200).json({
       success:true,
       events:events,
+      count:events.length,
       message:"events are successfully fetched."
    })
   }
@@ -226,4 +266,19 @@ exports.createMember=async(req,res)=>{
   catch(error){
       res.status(500).json({ message: "internal server error" });  
     }
+}
+
+exports.fetchMembers=async(req,res)=>{
+  try{
+   const members=await MemberProfile.find();
+   res.status(200).json({
+      success:true,
+      members:members,
+      count:members.length,
+      message:"events are successfully fetched."
+   })
+  }
+  catch(error){
+      res.status(500).json({ message: "internal server error" });
+  }
 }

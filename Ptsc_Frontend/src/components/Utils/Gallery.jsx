@@ -30,7 +30,7 @@ const prevImage=()=>{
     setCurrentIndex((currentIndex) => (currentIndex - 1 + images.length) % images.length);
 }
   return (
-    <div className='relative w-full dark:bg-gray-800 mx-auto pt-32 pb-32 p-4  shadow-lg flex flex-col justify-center items-center gap-4'>
+    <div className=' w-full dark:bg-gray-800 mx-auto pt-32 pb-32 p-4  shadow-lg flex flex-col justify-center items-center gap-4'>
   {/* Title */}
   <div className='font-bold text-center font-serif text-3xl sm:text-4xl py-8 dark:text-white'>
     Event Gallery
