@@ -2,6 +2,7 @@
 import React from 'react'
 import { useEffect } from 'react';
 import {useState} from 'react'
+import { toast } from 'react-toastify';
 
 function NewEvent() {
   const [events,setEvents]=useState([]);
@@ -28,8 +29,10 @@ function NewEvent() {
         credentials:"include",
         body:JSON.stringify(formData)
       });
+      if(res.ok){
+        toast.success("Event added successfully!");
+      }
       const newEvent=await res.json();
-      console.log("newEvent",newEvent);
       setEvents([newEvent.event,...events]);
       setFormData({
         title:"",

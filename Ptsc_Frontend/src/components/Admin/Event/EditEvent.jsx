@@ -16,11 +16,6 @@ function EditEvent({ event }) {
   };
   const handleSave = async (e,eventId) => {
        e.preventDefault();
-       if (!formData.title || !formData.date) {
-        toast.warning('Please fill all required fields');
-         return;
-       }
-
     try {
       const res = await fetch(`http://localhost:4000/v1/editEvent/${eventId}`, {
         method: 'PATCH',

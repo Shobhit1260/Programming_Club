@@ -253,6 +253,8 @@ exports.fetchEvents=async(req,res)=>{
   }
 }
 
+
+
 exports.createMember=async(req,res)=>{
   try{
    const{name,role,imageUrl}=req.body;
@@ -265,6 +267,54 @@ exports.createMember=async(req,res)=>{
    }
   catch(error){
       res.status(500).json({ message: "internal server error" });  
+    }
+}
+
+
+exports.editMember=async(req,res)=>{
+  try{
+    
+     const {id}=req.params;
+     const member = await MemberProfile.findByIdAndUpdate(id,{
+      $set:req.body
+     },
+     {new:true,runValidators: true});
+
+     if(!member) {
+      return res.status(404).json({
+        success: false,
+        message: "Member not found",
+      });
+    }
+      res.status(201).json({
+       success:true,
+       member,
+       message:"event edited succesfully",
+     })
+    }
+    catch(error){
+      res.status(500).json({ message: "internal server error" });    
+    }
+}
+
+exports.deleteMember=async(req,res)=>{
+  try{
+     const {id}=req.params;
+     const updatedMember = await MemberProfile.findByIdAndDelete(id);
+      if (!updatedMember) {
+      return res.status(404).json({
+        success: false,
+        message: "Member not found",
+      });
+    }
+     res.status(200).json({
+       success:true,
+       updatedMember,
+       message:"member deleted succesfully",
+     })
+    }
+    catch(error){
+      res.status(500).json({ message: "internal server error" });    
     }
 }
 

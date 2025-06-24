@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux'
 import { setEditingEventId,clearEditingEventId} from '../../Redux/EventSlice';
 import { toast } from 'react-toastify';
 
-function Prepared_Event({event}) {
+function Prepared_Event({event,}) {
   const dispatch = useDispatch();
   const onDelete=async(id)=>{
     try{
