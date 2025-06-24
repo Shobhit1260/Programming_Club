@@ -23,7 +23,6 @@ exports.uploadMediatoS3=[ upload.single("media"),
     async (req,res,next)=>{ 
     try{
         const file = req.file;   
-        console.log("file:",file);
         if(!file){
             return res.status(400).json({message:"file not found"});
         }
@@ -35,9 +34,7 @@ exports.uploadMediatoS3=[ upload.single("media"),
         ContentType:file.mimetype,
         });
       await s3Client.send(command);  
-      const uploadURL=await getSignedUrl(s3Client,command);
       req.s3Key = `uploads/media/${fileKey}`;
-      req.s3UploadURL = uploadURL;
       next();
     }
     catch(error){

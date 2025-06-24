@@ -2,15 +2,19 @@ const Media=require("../Models/media.js");
 exports.entryindb=async(req,res)=>{
     try {
       const file= req.file;
-      console.log("req.user:",req.user);
       const User=req.user;
-      console.log("s3Key:",req.s3Key);
-        const media = await Media.create({
-          UploadedBy: User._id.toString(),
+     
+      const media = await Media.create({
+          title: req.body.title || "",
+          description:req.body.description || "",
+          fileType:file.mimetype,
+          fileSize:file.size,
           fileName: file.originalname,
+          UploadedBy: User._id.toString(),
           s3Key: req.s3Key,
-          uploadUrl: req.s3UploadURL,
+          thumbnailKey:req.body.thumbnailKey || "",
         });
+
         return res.status(200).json({
           success: true,
           message: "Media uploaded and saved",
