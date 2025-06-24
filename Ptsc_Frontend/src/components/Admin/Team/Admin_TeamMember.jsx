@@ -32,7 +32,6 @@ function Team() {
     try {
       const res = await fetch("http://localhost:4000/v1/fetchMembers");
       const data = await res.json();
-      console.log("Fetched members:", data.members);
       setMembers(data.members);
     } 
     catch (error) {

@@ -68,6 +68,15 @@ function EditEvent({ event }) {
           value={formData.date ? formData.date.substring(0, 10) : ''}
           onChange={handleFormData}
         />
+
+        <input
+          type="time"
+          className="outline-none border-2 border-gray-500 rounded-lg p-2"
+          name="time"
+          value={formData.time}
+          onChange={handleFormData}
+        />
+
         <input
           type="text"
           className="outline-none border-2 border-gray-500 rounded-lg p-2"

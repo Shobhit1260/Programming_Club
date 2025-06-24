@@ -1,7 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TeamCard from '../Utils/TeamCard'
 
 function Team() {
+     const [members, setMembers] = useState([]);
+   const fetchMembers = async () => {
+      try {
+        const res = await fetch("http://localhost:4000/v1/fetchMembers");
+        const data = await res.json();
+        setMembers(data.members);
+      } 
+      catch (error) {
+        console.error("Failed to fetch members:", error.message);
+      }
+    };
+  
+    useEffect(() => {
+      fetchMembers();
+    }, []);
   return (
     <div className='min-h-screen w-full bg-gradient-to-b from-blue-200 to-white'>
       <div className='dark:bg-gray-800 dark:text-white w-full flex flex-col justify-center items-center gap-4 pt-24 px-4 text-center'>
@@ -10,26 +25,19 @@ function Team() {
       </div>
 
       <div className='dark:bg-gray-800 dark:text-white w-full flex justify-center items-center flex-wrap gap-6 pt-16 pb-16 px-4'>
-        <TeamCard
-          Name="Gaurpad Shukla"
-          Position="Secretary"
-          Image="https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png"
-        />
-        <TeamCard
-          Name="Abcdbf"
-          Position="Secretary"
-          Image="https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png"
-        />
-        <TeamCard
-          Name="Abcdbf"
-          Position="Secretary"
-          Image="https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png"
-        />
-        <TeamCard
-          Name="Abcdbf"
-          Position="Secretary"
-          Image="https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png"
-        />
+        {
+          members.map((member) => {
+            if (!member) return null;
+            return (
+              <TeamCard
+                key={member._id}
+                Name={member.name}
+                Position={member.role}
+                Image={member.imageUrl || "https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png"}
+              />
+            );
+          })
+        }
       </div>
     </div>
   )

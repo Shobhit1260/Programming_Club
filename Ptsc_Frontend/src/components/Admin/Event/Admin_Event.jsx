@@ -7,7 +7,7 @@ import Prepared_Event from './Prepared_Event';
 import NewEvent from './newEvent';
 
 function Admin_Event() {
-  const [events,setEvents]=useState([]);
+  const [events,setEvents]=useState([] );
   const [eventsCount,setEventsCount]=useState(0);
   const editingEventId=useSelector((state)=>state.event.editingEventId);
   const dispatch= useDispatch();

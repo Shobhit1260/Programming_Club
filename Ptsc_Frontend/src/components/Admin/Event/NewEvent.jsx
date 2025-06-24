@@ -10,6 +10,7 @@ function NewEvent() {
     title:"",
     description:"",
     date:"",
+    time:"",
     status:"Upcoming"
   })
 
@@ -38,6 +39,7 @@ function NewEvent() {
         title:"",
         description:"",
         date:"",
+        time:"",
         status:"",
       })
   }
@@ -72,6 +74,14 @@ function NewEvent() {
             onChange={handleFormData}  
             placeholder="Date" 
             className='text-gray-600 p-2 rounded-lg border-2 border-gray-600 outline-none'/>
+
+           <input 
+            type="time" 
+            name="time"
+            value={formData.time}
+            onChange={handleFormData} 
+            placeholder="Time" 
+            className='text-gray-600 p-2 rounded-lg border-2 border-gray-600 outline-none' />  
 
           <select 
            name="status"

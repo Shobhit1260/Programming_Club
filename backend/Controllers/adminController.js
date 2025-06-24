@@ -178,7 +178,7 @@ exports.logout=async(req,res)=>{
 
 exports.createEvent=async(req,res)=>{
   try{
-     const {title,description,date,status}=req.body;
+     const {title,description,date,time,status}=req.body;
      const dulpEvent=await Event.findOne({title});
      if(dulpEvent){
       return res.status(409).json({
@@ -186,7 +186,7 @@ exports.createEvent=async(req,res)=>{
         message:"Duplicate title not allowed."
       })
      }
-     const event = await Event.create({title,description,date,status});
+     const event = await Event.create({title,description,date,time,status});
      res.status(200).json({
        success:true,
        event,

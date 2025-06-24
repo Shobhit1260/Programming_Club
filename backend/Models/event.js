@@ -13,6 +13,10 @@ const eventSchema= new mongoose.Schema({
     type:Date,
     default:Date.now(),
    },
+   time:{
+    type:String,
+    required:true,
+   },
    status:{
     type:String,
    }

@@ -40,11 +40,12 @@ function App() {
             <Route path="resource" element={<Resource />} />
             <Route path="workshop" element={<Workshop />} />
          </Route>
+         
         <Route path='/admin' element={<Admin/>}> 
          <Route index element={<Admin_Event/>}/>
          <Route  path="admin_event" element={<Admin_Event/>}/>
          <Route path="admin_team" element={<Admin_TeamMember/>}/>
-          <Route path="admin_pendingmembers" element={<GetAll_Pendings/>}/>
+         <Route path="admin_pendingmembers" element={<GetAll_Pendings/>}/>
          <Route path="admin_resources" element={<Admin_Resource/>}/>
          <Route path="admin_leaderboard" element={<Admin_LeaderBoard/>}/>
         </Route>   

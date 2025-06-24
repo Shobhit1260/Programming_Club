@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 
-function EventCard({Title,Description,Year,Month,date,Time}) {
-    const [desc,setDesc]=useState("");
+function EventCard({Title,Description,Year,Month,date,Time,time}) {
+    const [desc,setDesc]=useState("Upcoming");
     useEffect(()=>{
-        const eventData = new Date(Year, Month - 1, date, 10, 0, 0); // Month is 0-indexed
+        const eventData = new Date(time); 
         const currentDate=new Date();
         const diff= +eventData - +currentDate;
         if(diff>0){
@@ -16,6 +16,7 @@ function EventCard({Title,Description,Year,Month,date,Time}) {
     },[]);
     const openForm = () => {
     window.open("https://forms.gle/3d1b7c5f8Z2g4j6aA", "_blank");
+    
 };
 
 
