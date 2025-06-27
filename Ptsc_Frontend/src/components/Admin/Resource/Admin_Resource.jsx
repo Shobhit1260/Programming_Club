@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import Resources from './Resources';
 
 const MediaUploadForm = () => {
   const { register, 
@@ -36,25 +37,11 @@ const MediaUploadForm = () => {
       console.error('Upload error:', err);
     }
   };
-   const fetchMediaList = async () => {
-    try{
-       const res= await fetch('http://localhost:4000/v1/getallmedia');
-       const mediaList=await res.json();
-       if(res.ok){
-          console.log("Media List:", mediaList);
-       }
-    }
-    catch(error){
-        console.error("Error fetching media list:", error);
-    }
-  }
-    useEffect(() => {
-      fetchMediaList();
-    }, []);
+   
 
   return (
     <div className="w-full mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-
+     <Resources/>
       <h2 className="text-2xl font-semibold mb-4 text-center">Upload Media</h2>
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" className="space-y-4 w-full ">
         <div>

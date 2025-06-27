@@ -1,7 +1,7 @@
 const Media=require("../Models/media.js");
 exports.entryindb=async(req,res)=>{
     try {
-      const file= req.file;
+      const file= req.files.media[0];
       const User=req.user;
      
       const media = await Media.create({
@@ -12,7 +12,7 @@ exports.entryindb=async(req,res)=>{
           fileName: file.originalname,
           UploadedBy: User._id.toString(),
           s3Key: req.s3Key,
-          thumbnailKey:req.body.thumbnailKey || "",
+          thumbnailKey:req.thumbnailKey || "",
         });
 
         return res.status(200).json({
