@@ -47,7 +47,7 @@ function Signup() {
        <form
         onSubmit={handleSubmit(onSubmit)}
         className='w-full md:w-1/2 lg:w-[80%] flex flex-col space-y-2 md:space-y-6 shadow-xl bg-white dark:bg-gray-900 p-4 md:p-8  rounded-xl'>
-          {/* First Name */}
+         
           <div className='flex flex-col'>
             <label className='text-black dark:text-white text-sm font-serif'>First Name</label>
             <input
@@ -60,7 +60,7 @@ function Signup() {
             {errors.firstName && <span className='text-red-500'>*{errors.firstName.message}</span>}
           </div>
 
-          {/* Last Name */}
+       
           <div className='flex flex-col'>
             <label className='text-black dark:text-white text-sm font-serif'>Last Name</label>
             <input
@@ -73,7 +73,7 @@ function Signup() {
             {errors.lastName && <span className='text-red-500'>*{errors.lastName.message}</span>}
           </div>
 
-          {/* User Name */}
+          
           <div className='flex flex-col'>
             <label className='text-black dark:text-white text-sm font-serif'>Username</label>
             <input
@@ -86,7 +86,7 @@ function Signup() {
             {errors.userName && <span className='text-red-500'>*{errors.userName.message}</span>}
           </div>
 
-          {/* Email */}
+          
           <div className='flex flex-col'>
             <label className='text-black dark:text-white text-sm font-serif'>Email</label>
             <input
@@ -102,7 +102,7 @@ function Signup() {
             {errors.email && <span className='text-red-500'>*{errors.email.message}</span>}
           </div>
 
-          {/* Mobile Number */}
+         
           <div className='flex flex-col'>
             <label className='text-black dark:text-white text-sm font-serif'>Mobile No.</label>
             <input
@@ -118,7 +118,7 @@ function Signup() {
             {errors.mobile && <span className='text-red-500'>*{errors.mobile.message}</span>}
           </div>
 
-          {/* Password */}
+         
           <div className='flex flex-col'>
             <label className='text-black dark:text-white text-sm font-serif'>Password</label>
             <input
@@ -136,7 +136,7 @@ function Signup() {
             {errors.password && <span className='text-red-500'>*{errors.password.message}</span>}
           </div>
 
-          {/* Submit Button */}
+          
           <input
             type='submit'
             disabled={isSubmitting}

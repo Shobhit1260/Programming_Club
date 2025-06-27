@@ -19,29 +19,42 @@ const s3Client = new S3Client({
     },
      });
 
-exports.uploadMediatoS3=[ upload.single("media"),
-    async (req,res,next)=>{ 
-    try{
-        const file = req.file;   
-        if(!file){
-            return res.status(400).json({message:"file not found"});
-        }
-        const fileKey=`${Date.now()}-${file.originalname}`;
-        const command = new PutObjectCommand({
-        Bucket: process.env.AWS_BUCKET_NAME, 
-        Key:`uploads/media/${fileKey}`,
-        Body: file.buffer,
-        ContentType:file.mimetype,
-        });
-      await s3Client.send(command);  
-      req.s3Key = `uploads/media/${fileKey}`;
-      next();
+exports.uploadMediatoS3=[ upload.fields([
+  {"name":"media","maxCount":1},
+  {"name":"thumbnail","maxCount":1}
+]),
+async (req, res, next) => {
+try{
+   const mediaFile=await req.files.media[0];
+
+  if (!mediaFile) {
+        return res.status(400).json({ message: "Media file not found" });
     }
-    catch(error){
-        console.log("error:",error);
-    }
- }
-]
+  await s3Client.send(
+    new PutObjectCommand({
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: `media/${uuidv4()}-${mediaFile.originalname}`,
+      Body: mediaFile.buffer,
+      contentType: mediaFile.mimetype,
+    })
+   )
+   const thumbnailFile=req.files.thumbnail?req.files.thumbnail[0]:null;
+  await s3Client.send(
+    new PutObjectCommand({
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: thumbnailFile ? `thumbnails/${uuidv4()}-${thumbnailFile.originalname}` : '',
+      Body: thumbnailFile ? thumbnailFile.buffer : null,
+      contentType: thumbnailFile ? thumbnailFile.mimetype : 'image/jpeg', 
+    })
+   )
+   req.s3Key = `media/${uuidv4()}-${mediaFile.originalname}`;
+   req.thumbnailKey = thumbnailFile ? `thumbnails/${uuidv4()}-${thumbnailFile.originalname}` : '';
+   next();
+}
+catch(error){
+  console.error("Error in multer upload:", error);
+}
+}];
 
 exports.DownloadMediafromS3=async(req,res)=>{
       const {id} = req.params;
@@ -87,7 +100,7 @@ exports.DeleteMedia = async(req,res)=>{
     }));
 
     await media.deleteOne(); 
-    return res.status(200).json({
+    return res.status(204).json({
       success: true,
       message: "Media deleted successfully",
     });
@@ -113,7 +126,7 @@ exports.DeleteMultipleMedia=async(req,res)=>{
   
     await Media.deleteMany({ _id: { $in: mediaIds } });
 
-    res.status(200).json({ message: "Bulk media deleted successfully" });
+    res.status(204).json({ message: "Bulk media deleted successfully" });
   } catch (err) {
     res.status(500).json({ message: "Bulk delete failed", error: err });
   }
