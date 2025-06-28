@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { set, useForm } from 'react-hook-form';
 import Resources from './Resources';
+import { toast } from 'react-toastify';
 
 const MediaUploadForm = () => {
+
+  const [loading, setLoading] = useState(false);
+
   const { register, 
           handleSubmit, 
           reset, 
@@ -20,6 +24,7 @@ const MediaUploadForm = () => {
     }
 
     try {
+      setLoading(true);
       const res= await fetch('http://localhost:4000/v1/upload', {
         method: 'POST',
         credentials: 'include', 
@@ -28,13 +33,16 @@ const MediaUploadForm = () => {
 
       const result = await res.json();
       if (res.ok) {
-        alert('Upload successful!');
+        toast.success('Upload successful!');
         reset();
       } else {
-        alert('Upload failed: ' + result.message);
+        toast.error('Upload failed: ' + result.message);
       }
     } catch (err) {
       console.error('Upload error:', err);
+    }
+    finally{
+      setLoading(false);
     }
   };
    
@@ -42,6 +50,16 @@ const MediaUploadForm = () => {
   return (
     <div className="w-full mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
      <Resources/>
+     {loading && (
+  <div className="flex items-center gap-2 text-blue-600 my-4">
+    <svg className="animate-spin h-5 w-5 text-blue-600" viewBox="0 0 24 24">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+    </svg>
+    Uploading...
+  </div>
+    )}
+
       <h2 className="text-2xl font-semibold mb-4 text-center">Upload Media</h2>
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" className="space-y-4 w-full ">
         <div>

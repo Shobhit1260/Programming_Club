@@ -26,29 +26,32 @@ exports.uploadMediatoS3=[ upload.fields([
 async (req, res, next) => {
 try{
    const mediaFile=await req.files.media[0];
+   console.log("Media File:", mediaFile);
 
   if (!mediaFile) {
         return res.status(400).json({ message: "Media file not found" });
     }
+  const mediaS3Key = `media/${uuidv4()}-${mediaFile.originalname}`;  
   await s3Client.send(
     new PutObjectCommand({
       Bucket: process.env.AWS_BUCKET_NAME,
-      Key: `media/${uuidv4()}-${mediaFile.originalname}`,
+      Key: mediaS3Key,
       Body: mediaFile.buffer,
-      contentType: mediaFile.mimetype,
+      ContentType: mediaFile.mimetype,
     })
    )
-   const thumbnailFile=req.files.thumbnail?req.files.thumbnail[0]:null;
+  const thumbnailFile=req.files.thumbnail?req.files.thumbnail[0]:null;
+  const thumbnailKey = thumbnailFile ? `thumbnails/${uuidv4()}-${thumbnailFile.originalname}` : '';
   await s3Client.send(
     new PutObjectCommand({
       Bucket: process.env.AWS_BUCKET_NAME,
-      Key: thumbnailFile ? `thumbnails/${uuidv4()}-${thumbnailFile.originalname}` : '',
+      Key: thumbnailFile ? thumbnailKey:null,
       Body: thumbnailFile ? thumbnailFile.buffer : null,
-      contentType: thumbnailFile ? thumbnailFile.mimetype : 'image/jpeg', 
+      ContentType: thumbnailFile ? thumbnailFile.mimetype : 'image/jpeg', 
     })
    )
-   req.s3Key = `media/${uuidv4()}-${mediaFile.originalname}`;
-   req.thumbnailKey = thumbnailFile ? `thumbnails/${uuidv4()}-${thumbnailFile.originalname}` : '';
+   req.s3Key = mediaS3Key;
+   req.thumbnailKey = thumbnailKey||'';
    next();
 }
 catch(error){
@@ -66,14 +69,22 @@ exports.DownloadMediafromS3=async(req,res)=>{
                 message: "Media not found",
             });
         }
-        const command = new GetObjectCommand({
+        const command1 = new GetObjectCommand({
             Bucket: process.env.AWS_BUCKET_NAME,
             Key: media.s3Key,
         });
-        const downloadURL = await getSignedUrl(s3Client, command);
+
+         const command2 = new GetObjectCommand({
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: media.thumbnailKey || '',
+        });
+        const downloadURLforMedia = await getSignedUrl(s3Client, command1);
+        const downloadURLforThumbnail = await getSignedUrl(s3Client, command2);
+
         res.status(200).json({
             success: true,
-            downloadURL: downloadURL,
+            downloadURLforMedia: downloadURLforMedia,
+            downloadURLforThumbnail:downloadURLforThumbnail
         });
       }
       catch(error){
