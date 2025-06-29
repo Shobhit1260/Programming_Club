@@ -5,9 +5,27 @@ const Media=require("../Models/media");
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const dotenv = require("dotenv");
+const path = require('path');
+const fs=require('fs');
+
 dotenv.config();
 
-const storage = multer.memoryStorage();
+
+const pathtoUpload=path.join(__dirname,'uploads');
+if(!fs.existsSync(pathtoUpload)){
+  fs.mkdirSync(pathtoUpload, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, pathtoUpload); 
+  },
+  filename: (req, file, cb) => {
+    const cleanedOriginalName = file.originalname.trim();
+    const uniqueName = `${uuidv4()}-${cleanedOriginalName}`;
+    cb(null, uniqueName); 
+  }
+});
 const upload = multer({ storage });
 
 // @ts-ignore
@@ -26,32 +44,46 @@ exports.uploadMediatoS3=[ upload.fields([
 async (req, res, next) => {
 try{
    const mediaFile=await req.files.media[0];
-   console.log("Media File:", mediaFile);
-
+  
   if (!mediaFile) {
         return res.status(400).json({ message: "Media file not found" });
     }
-  const mediaS3Key = `media/${uuidv4()}-${mediaFile.originalname}`;  
+  const mediaS3Key = `media/${mediaFile.filename}`;  
+  const mediaStream = fs.createReadStream(mediaFile.path);
   await s3Client.send(
     new PutObjectCommand({
       Bucket: process.env.AWS_BUCKET_NAME,
       Key: mediaS3Key,
-      Body: mediaFile.buffer,
+      Body: mediaStream,
       ContentType: mediaFile.mimetype,
     })
    )
-  const thumbnailFile=req.files.thumbnail?req.files.thumbnail[0]:null;
-  const thumbnailKey = thumbnailFile ? `thumbnails/${uuidv4()}-${thumbnailFile.originalname}` : '';
-  await s3Client.send(
-    new PutObjectCommand({
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Key: thumbnailFile ? thumbnailKey:null,
-      Body: thumbnailFile ? thumbnailFile.buffer : null,
-      ContentType: thumbnailFile ? thumbnailFile.mimetype : 'image/jpeg', 
-    })
-   )
+
+   fs.unlink(mediaFile.path, (err) => {
+        if (err) console.error("Error deleting media file:", err);
+    });
+  
+  const thumbnailFile = req.files.thumbnail ? req.files.thumbnail[0] : null;  
+  let thumbnailS3Key = ''; 
+  if (thumbnailFile) {
+      thumbnailS3Key = `thumbnails/${thumbnailFile.filename}`;
+      const thumbStream = fs.createReadStream(thumbnailFile.path);
+      await s3Client.send(
+            new PutObjectCommand({
+              Bucket: process.env.AWS_BUCKET_NAME,
+              Key: thumbnailS3Key,
+              Body: thumbStream,
+              ContentType: thumbnailFile.mimetype,
+      })
+    )}
+  if (thumbnailFile) {
+  fs.unlink(thumbnailFile.path, (err) => {
+     if (err) console.error("Error deleting thumbnail file:", err);
+  });
+  }
+
    req.s3Key = mediaS3Key;
-   req.thumbnailKey = thumbnailKey||'';
+   req.thumbnailKey = thumbnailS3Key||'';
    next();
 }
 catch(error){
@@ -72,14 +104,15 @@ exports.DownloadMediafromS3=async(req,res)=>{
         const command1 = new GetObjectCommand({
             Bucket: process.env.AWS_BUCKET_NAME,
             Key: media.s3Key,
+            ResponseContentDisposition: 'attachment'
         });
 
          const command2 = new GetObjectCommand({
             Bucket: process.env.AWS_BUCKET_NAME,
             Key: media.thumbnailKey || '',
         });
-        const downloadURLforMedia = await getSignedUrl(s3Client, command1);
-        const downloadURLforThumbnail = await getSignedUrl(s3Client, command2);
+        const downloadURLforMedia = await getSignedUrl(s3Client, command1,{ expiresIn: 3600 });
+        const downloadURLforThumbnail = await getSignedUrl(s3Client, command2,{ expiresIn: 3600 });
 
         res.status(200).json({
             success: true,

@@ -31,8 +31,7 @@ function Resources() {
      
     useEffect(() => {
         const filtered = mediaList.filter(media =>(
-            media.title.toLowerCase().includes(search.toLowerCase()) ||
-            media.description.toLowerCase().includes(search.toLowerCase()) 
+            media.title.toLowerCase().includes(search.toLowerCase())
         ));
         setfilteredMedia(filtered);
         setCurrentPage(1); 
@@ -88,10 +87,10 @@ useEffect(() => {
         />
       </div>
 
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+      <div className=" grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
      
         {currentPageMedia.map(media => (
-         <div key={media._id} className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+         <div key={media._id} className="z-60 bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
       <div className="relative w-full aspect-video bg-gray-100">
         {media.thumbnailKey && (
           <img onClick={() => setPreview(media)} 
