@@ -1,90 +1,99 @@
 // @ts-nocheck
-import React from 'react'
-import { useEffect } from 'react';
-import {useState} from 'react'
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 function NewMember() {
-  const [members,setMembers]=useState([]);
-  const [formData,setFormData]=useState({
-    imageUrl:"",
-    name:"",
-    role:"",
-  })
+  const [members, setMembers] = useState([]);
+  const [formData, setFormData] = useState({
+    imageUrl: "",
+    name: "",
+    role: "",
+  });
 
-  const handleFormData=(e)=>{
+  const handleFormData = (e) => {
     setFormData({
       ...formData,
-        [e.target.name]:e.target.value,
-     })
-  }
-  const AddMember=async (e)=>{
-      e.preventDefault();
-      try{
-      const res=await fetch("http://localhost:4000/v1/createMember",{
-        method:"POST",
-        headers:{
-          "content-type":"application/json",
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const AddMember = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("http://localhost:4000/v1/createMember", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
         },
-        credentials:"include",
-        body:JSON.stringify(formData)
+        credentials: "include",
+        body: JSON.stringify(formData),
       });
-      const newMember=await res.json();
-      if(res.ok){
+
+      const newMember = await res.json();
+
+      if (res.ok) {
         toast.success("Member added successfully!");
         setFormData({
-        imageUrl:"",
-        name:"",
-        role:"",
-      })
+          imageUrl: "",
+          name: "",
+          role: "",
+        });
+        setMembers([newMember.member, ...members]);
+      } else {
+        toast.error("Failed to add member. Please try again.");
       }
-      setMembers([newMember.member,...members]);
-    }
-    catch(error){
+    } catch (error) {
       console.error("Error adding member:", error.message);
       toast.error("Failed to add member. Please try again.");
-    } 
-  }
- 
+    }
+  };
+
   return (
-    <div >
-        <h1 className='text-black font-bold px-4 text-2xl pt-8'>Manage Team</h1>
-        <form 
+    <div className="w-full p-4 sm:p-6 mt-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg transition-colors duration-300">
+      <h1 className="text-black dark:text-white font-bold text-2xl mb-4">
+        Manage Team
+      </h1>
+
+      <form
         onSubmit={AddMember}
-        className='flex flex-col w-full p-4 gap-2'>
-            <input 
-            type="text" 
-            name="imageUrl"
-            value={formData.imageUrl}
-            onChange={handleFormData} 
-            placeholder="ImageUrl" 
-            className='text-gray-600 p-2 rounded-lg border-2 border-gray-600 outline-none' />
+        className="flex flex-col gap-4 w-full max-w-lg"
+      >
+        <input
+          type="text"
+          name="imageUrl"
+          value={formData.imageUrl}
+          onChange={handleFormData}
+          placeholder="Image URL"
+          className="p-2 rounded-lg border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white bg-gray-50 dark:bg-gray-800 outline-none focus:ring-2 focus:ring-cyan-400"
+        />
 
-            <input 
-            type="text" 
-            name="name"
-            value={formData.name}
-            onChange={handleFormData}
-            placeholder="Name" 
-            className='text-gray-600 p-2 rounded-lg border-2 border-gray-600 outline-none'/>
-          
-          <input 
-            type="text" 
-            name="role"
-            value={formData.role}
-            onChange={handleFormData}  
-            placeholder="Role" 
-            className='text-gray-600 p-2 rounded-lg border-2 border-gray-600 outline-none'/>
-         <input 
-            type="submit" 
-            value="Add Member"  
-            className='bg-cyan-300 text-white p-2 w-min rounded-lg'/>
-        </form>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleFormData}
+          placeholder="Name"
+          className="p-2 rounded-lg border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white bg-gray-50 dark:bg-gray-800 outline-none focus:ring-2 focus:ring-cyan-400"
+        />
+
+        <input
+          type="text"
+          name="role"
+          value={formData.role}
+          onChange={handleFormData}
+          placeholder="Role"
+          className="p-2 rounded-lg border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white bg-gray-50 dark:bg-gray-800 outline-none focus:ring-2 focus:ring-cyan-400"
+        />
+
+        <button
+          type="submit"
+          className="bg-cyan-500 hover:bg-cyan-600 text-white font-medium px-4 py-2 rounded-lg w-fit transition-colors duration-200"
+        >
+          Add Member
+        </button>
+      </form>
     </div>
-  )
+  );
 }
+
 export default NewMember;
-
-
-
-

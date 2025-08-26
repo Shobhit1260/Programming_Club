@@ -14,7 +14,7 @@ function Navbar() {
   };
 
   return (
-    <div className='fixed z-80 w-full dark:border-b-2 dark:border-gray-600 bg-white dark:bg-gray-800 shadow-lg font-sans'>
+    <div className='fixed z-40 w-full dark:border-b-2 dark:border-gray-600 bg-white dark:bg-gray-800 shadow-lg font-sans'>
       <div className='h-[80px] flex justify-between items-center px-6 py-4'>
         <div className='flex gap-2 items-center'>
           <img

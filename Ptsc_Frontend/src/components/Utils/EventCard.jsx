@@ -1,41 +1,54 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-function EventCard({Title,Description,Year,Month,date,Time,time}) {
-    const [desc,setDesc]=useState("Upcoming");
-    useEffect(()=>{
-        const eventData = new Date(time); 
-        const currentDate=new Date();
-        const diff= +eventData - +currentDate;
-        if(diff>0){
-           setDesc("Upcoming")
-        }
-        else{
-            setDesc("Passed");
-        }
-    },[]);
-    const openForm = () => {
+function EventCard({ Title, Description, Year, Month, date, Time, time }) {
+  const [desc, setDesc] = useState("Upcoming");
+
+  useEffect(() => {
+    const eventData = new Date(time);
+    const currentDate = new Date();
+    const diff = +eventData - +currentDate;
+    setDesc(diff > 0 ? "Upcoming" : "Passed");
+  }, [time]);
+
+  const openForm = () => {
     window.open("https://forms.gle/3d1b7c5f8Z2g4j6aA", "_blank");
-    
-};
-
+  };
 
   return (
-    <div className='w-11/12 h-min bg-white shadow-lg rounded-lg p-8 mt-8 mx-8 flex justify-between  dark:bg-gray-900 items-start gap-4'>
-        <div className='w-1/2 h-min bg-white dark:text-white dark:bg-gray-900 mx-8 flex flex-col justify-center items-start gap-4'>
-            <h1 className='font-bold text-black dark:text-white text-2xl'>{Title}</h1>
-            <p className='text-gray-500 dark:text-white'>{Description}</p>
-            <span className='text-gray-400 dark:text-white'>{`${date}-${Month}-${Year}`}</span>
-            <span className='text-gray-400 dark:text-white'>{Time}</span>
-            <button onClick={openForm} className='bg-blue-500 text-white p-2 rounded-lg mt-4'>Register Now</button>
+    <div className="w-11/12 max-w-3xl mx-auto mt-8 p-6 sm:p-8 
+      bg-white dark:bg-gray-900 rounded-xl shadow-lg 
+      flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 
+      transition-all duration-300">
+      
+      {/* Event Info */}
+      <div className="flex-1 flex flex-col gap-3">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{Title}</h1>
+        <p className="text-gray-600 dark:text-gray-300">{Description}</p>
+        <div className="text-sm text-gray-500 dark:text-gray-400">
+          <span>{`${date}-${Month}-${Year}`}</span> • <span>{Time}</span>
         </div>
-        
-            {desc === "Upcoming" ? 
-            <span className='bg-green-500 text-white  rounded-lg p-2'>Upcoming</span>
-            :<span className='bg-gray-500  text-white rounded-lg p-2'>Passed</span>}
-        
+        <button 
+          onClick={openForm} 
+          className="self-start bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm sm:text-base transition"
+        >
+          Register Now
+        </button>
+      </div>
+
+      {/* Status Badge */}
+      <div>
+        {desc === "Upcoming" ? (
+          <span className="bg-green-500/90 text-white px-4 py-2 rounded-lg shadow-md text-sm sm:text-base">
+            Upcoming
+          </span>
+        ) : (
+          <span className="bg-red-500/90 text-white px-4 py-2 rounded-lg shadow-md text-sm sm:text-base">
+            Passed
+          </span>
+        )}
+      </div>
     </div>
-  )
+  );
 }
 
-export default EventCard
+export default EventCard;

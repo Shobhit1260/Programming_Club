@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { useForm } from "react-hook-form";
 
 function ContactUs() {
@@ -10,41 +10,47 @@ function ContactUs() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    await new Promise((resolve) => setTimeout(resolve, 4000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     console.log(data);
     reset();
   };
 
   return (
-    <div className='w-full min-h-screen bg-gradient-to-b from-blue-200 to-white bg-gray-800 pt-24 dark:from-gray-800 dark:to-gray-800  px-4 dark:text-white  md:px-16'>
-      <div className='flex flex-col gap-6 mb-12 text-center'>
-        <h1 className='text-3xl md:text-4xl font-bold font-serif'>Contact Us</h1>
-        <h2 className='text-base md:text-xl text-gray-600 dark:text-gray-300 font-serif'>
-          Get in touch with our team
-        </h2>
-      </div>
+    <div className="pt-24 w-full min-h-screen bg-gradient-to-b from-blue-100 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 sm:px-8 md:px-16 py-16 flex justify-center items-center">
+      <div className="w-full max-w-3xl bg-white dark:bg-gray-900 shadow-2xl rounded-2xl px-6 sm:px-10 md:px-14 py-10 transition-all">
+        
+        {/* Heading */}
+        <div className="flex flex-col gap-3 mb-10 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold font-serif text-blue-600 dark:text-blue-400">
+            Contact Us
+          </h1>
+          <h2 className="text-base md:text-lg text-gray-600 dark:text-gray-300 font-serif">
+            We’d love to hear from you! Fill out the form and we’ll get back to you.
+          </h2>
+        </div>
 
-      <div className='flex justify-center'>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className='w-full max-w-3xl bg-white dark:bg-gray-900 shadow-xl rounded-2xl px-6 py-10 md:px-12 flex flex-col gap-6'
-        >
+        {/* Form */}
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           {/* Name */}
-          <div className='flex flex-col'>
-            <label className='text-sm font-serif'>Name</label>
+          <div className="flex flex-col">
+            <label className="text-sm font-medium mb-1 dark:text-gray-200">Name</label>
             <input
               {...register("Name", {
                 required: "Name is required",
                 minLength: { value: 3, message: "Minimum length should be 3" },
               })}
-              className='p-3 rounded-lg border-2 border-gray-400 outline-none text-black dark:text-white bg-transparent focus:border-blue-400 transition-all duration-200'
+              className="p-3 rounded-lg border border-gray-300 dark:border-gray-600 outline-none 
+                         text-black dark:text-white bg-white dark:bg-gray-800 
+                         focus:border-blue-500 focus:ring-2 focus:ring-blue-300 transition-all"
             />
-            {errors.Name && <span className='text-red-500 text-sm'>* {errors.Name.message}</span>}
+            {errors.Name && (
+              <span className="text-red-500 text-sm mt-1">* {errors.Name.message}</span>
+            )}
           </div>
 
           {/* Email */}
-          <div className='flex flex-col'>
-            <label className='text-sm font-serif'>Email</label>
+          <div className="flex flex-col">
+            <label className="text-sm font-medium mb-1 dark:text-gray-200">Email</label>
             <input
               {...register("email", {
                 required: "Email is required",
@@ -53,14 +59,18 @@ function ContactUs() {
                   message: "Invalid email address",
                 },
               })}
-              className='p-3 rounded-lg border-2 border-gray-400 outline-none text-black dark:text-white bg-transparent focus:border-blue-400 transition-all duration-200'
+              className="p-3 rounded-lg border border-gray-300 dark:border-gray-600 outline-none 
+                         text-black dark:text-white bg-white dark:bg-gray-800 
+                         focus:border-blue-500 focus:ring-2 focus:ring-blue-300 transition-all"
             />
-            {errors.email && <span className='text-red-500 text-sm'>* {errors.email.message}</span>}
+            {errors.email && (
+              <span className="text-red-500 text-sm mt-1">* {errors.email.message}</span>
+            )}
           </div>
 
           {/* Mobile */}
-          <div className='flex flex-col'>
-            <label className='text-sm font-serif'>Mobile No.</label>
+          <div className="flex flex-col">
+            <label className="text-sm font-medium mb-1 dark:text-gray-200">Mobile No.</label>
             <input
               {...register("mobile", {
                 required: "Mobile no. is required",
@@ -69,32 +79,44 @@ function ContactUs() {
                   message: "Enter a valid 10-digit number",
                 },
               })}
-              className='p-3 rounded-lg border-2 border-gray-400 outline-none text-black dark:text-white bg-transparent focus:border-blue-400 transition-all duration-200'
+              className="p-3 rounded-lg border border-gray-300 dark:border-gray-600 outline-none 
+                         text-black dark:text-white bg-white dark:bg-gray-800 
+                         focus:border-blue-500 focus:ring-2 focus:ring-blue-300 transition-all"
             />
-            {errors.mobile && <span className='text-red-500 text-sm'>* {errors.mobile.message}</span>}
+            {errors.mobile && (
+              <span className="text-red-500 text-sm mt-1">* {errors.mobile.message}</span>
+            )}
           </div>
 
           {/* Message */}
-          <div className='flex flex-col'>
-            <label className='text-sm font-serif'>Message</label>
+          <div className="flex flex-col">
+            <label className="text-sm font-medium mb-1 dark:text-gray-200">Message</label>
             <textarea
               {...register("Message", {
                 required: "Enter the message",
                 minLength: { value: 10, message: "Enter at least 10 characters" },
               })}
               rows={5}
-              className='p-3 rounded-lg border-2 border-gray-400 outline-none text-black dark:text-white bg-transparent focus:border-blue-400 transition-all duration-200 resize-none'
+              className="p-3 rounded-lg border border-gray-300 dark:border-gray-600 outline-none 
+                         text-black dark:text-white bg-white dark:bg-gray-800 
+                         focus:border-blue-500 focus:ring-2 focus:ring-blue-300 transition-all resize-none"
             />
-            {errors.Message && <span className='text-red-500 text-sm'>* {errors.Message.message}</span>}
+            {errors.Message && (
+              <span className="text-red-500 text-sm mt-1">* {errors.Message.message}</span>
+            )}
           </div>
 
           {/* Submit */}
-          <input
-            type='submit'
-            disabled={isSubmitting}
-            value={isSubmitting ? "Sending Message..." : "Send Message"}
-            className='cursor-pointer bg-blue-500 text-white font-bold rounded-lg p-3 transition-all hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed'
-          />
+          <div className="flex justify-center">
+            <input
+              type="submit"
+              disabled={isSubmitting}
+              value={isSubmitting ? "Sending..." : "Send Message"}
+              className="cursor-pointer w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-700 
+                         text-white font-semibold rounded-lg shadow-lg hover:opacity-90 transition-all 
+                         disabled:opacity-50 disabled:cursor-not-allowed"
+            />
+          </div>
         </form>
       </div>
     </div>

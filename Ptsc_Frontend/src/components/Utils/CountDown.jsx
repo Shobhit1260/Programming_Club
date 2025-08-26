@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-function CountDown({years="2025", month="07", date="14" }) {
+function CountDown({years="2025", month="09", date="29"}) {
     const [TimeLeft,SetTimeLeft]=useState({
         days:0,
         hours:0,

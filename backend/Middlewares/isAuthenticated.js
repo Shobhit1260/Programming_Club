@@ -4,7 +4,6 @@ const User=require("../Models/user");
 exports.isAuthenticated=async(req,res,next)=>{
     try{
     const token=req.cookies.token;
-    console.log("Token from cookie:", token);
     if(!token){
         return res.status(401).json({
             success:"Authentication token not found in cookies",

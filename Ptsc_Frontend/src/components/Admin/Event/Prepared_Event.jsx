@@ -1,42 +1,62 @@
-import React from 'react'
-import {useDispatch} from 'react-redux'
-import { setEditingEventId,clearEditingEventId} from '../../Redux/EventSlice';
-import { toast } from 'react-toastify';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { setEditingEventId } from "../../Redux/EventSlice";
+import { toast } from "react-toastify";
 
-function Prepared_Event({event,}) {
+function Prepared_Event({ event }) {
   const dispatch = useDispatch();
-  const onDelete=async(id)=>{
-    try{
-      const res=await fetch(`http://localhost:4000/v1/deleteEvent/${id}`,{
-        method:"DELETE",
-        credentials:"include"
-      })
-      if(res.ok){
-         toast.success("data successfully deleted.")
+
+  const onDelete = async (id) => {
+    try {
+      const res = await fetch(`http://localhost:4000/v1/deleteEvent/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      if (res.ok) {
+        toast.success("Event successfully deleted.");
+      } else {
+        toast.warning("Failed to delete event.");
       }
-      else{
-        toast.warning("failed to delete.")
-      }
+    } catch (error) {
+      console.log("Server Error:", error.message);
     }
-    catch(error){
-      console.log("server Error:",error.message)
-    }
-  }
+  };
+
   return (
-    <div className='flex flex-col gap-3 shadow-xl rounded-lg p-4'>
-      <div className='flex flex-col justify-between gap-1'>
-        <h1 className='text-black font-bold'>{event.title}</h1>
-        <h2 className='text-gray-500 font-md'>{event.description}</h2>
-        <h3 className='text-gray-500 font-md'>{event.date && event.date.substring(0,10)}</h3>
-        <h4 className='text-gray-500 font-md'>{event.time}</h4>
-        <h4 className='text-gray-500 font-md'>{event.status}</h4>
+    <div className="flex flex-col gap-3 shadow-lg rounded-xl p-4 bg-white dark:bg-gray-900 transition">
+      {/* Event Details */}
+      <div className="flex flex-col gap-1">
+        <h1 className="text-lg font-bold text-gray-900 dark:text-white">
+          {event.title}
+        </h1>
+        <h2 className="text-gray-600 dark:text-gray-300">{event.description}</h2>
+        <h3 className="text-gray-600 dark:text-gray-400">
+          {event.date && event.date.substring(0, 10)}
+        </h3>
+        <h4 className="text-gray-600 dark:text-gray-400">{event.time}</h4>
+        <h4 className="text-gray-600 dark:text-gray-400">{event.status}</h4>
       </div>
-       <div className='flex justify-start items-center gap-4 text-white'>
-        <button className='bg-cyan-300 rounded-lg p-2' onClick={()=>dispatch(setEditingEventId(event._id))}>Edit</button>
-        <button className='bg-red-700 rounded-lg p-2' onClick={()=>onDelete(event._id)}>Delete</button>
+
+      {/* Action Buttons */}
+      <div className="flex flex-col sm:flex-row justify-start items-center gap-3 mt-3">
+        <button
+          onClick={() => dispatch(setEditingEventId(event._id))}
+          className="w-full sm:w-auto px-4 py-2 bg-cyan-500 hover:bg-cyan-600 
+                     text-white font-semibold rounded-lg shadow-md transition"
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => onDelete(event._id)}
+          className="w-full sm:w-auto px-4 py-2 bg-red-600 hover:bg-red-700 
+                     text-white font-semibold rounded-lg shadow-md transition"
+        >
+          Delete
+        </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default Prepared_Event
+export default Prepared_Event;

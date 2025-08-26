@@ -7,7 +7,7 @@ import Cards from '../Utils/HomeCards';
 
 function Home() {
   return (
-    <div className='w-full h-screen bg-white dark:bg-gray-800 '> 
+    <div className='w-full h-screen bg-white dark:bg-gray-800'> 
        {/* hero section */}
        <section>
             <div className='pt-24 bg-gradient-to-b from-blue-500 to-white dark:from-gray-800 dark:to-gray-800  flex justify-center items-center flex-col gap-4'>
@@ -23,7 +23,7 @@ function Home() {
             <div className="bg-gradient-to-b from-cyan-700 to-cyan-100 w-11/12 h-min shadow-lg rounded-lg mx-auto mt-16 ">
             <div className='flex justify-between items-center h-48 p-4'>
                 <div className='w-1/2 flex flex-col justify-between items-start p-4 gap-8 font-bold text-white text-2xl'>
-                    <div className="text-white">Next Event : Hackathon 2025</div>
+                    <div className="text-white">Next Event : Short_INT AUG 2025</div>
                     <div className='w-11/12 text-white'><CountDown/> </div>
                 </div>
                 <div className='w-1/2 h-full'>
