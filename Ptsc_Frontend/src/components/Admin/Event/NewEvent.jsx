@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-const BASE = "http://localhost:4000/v1";
+const BASE = "https://programming-club-backend.onrender.com";
 function NewEvent() {
   const [events, setEvents] = useState([]);
   const [formData, setFormData] = useState({
