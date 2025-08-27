@@ -1,5 +1,5 @@
 
-const BASE = "http://localhost:4000/v1";
+const BASE = "https://programming-club-backend.onrender.com";
 
 export async function addToLeaderboard(payload) {
   const res = await fetch(`${BASE}/leaderboard/add`, {
