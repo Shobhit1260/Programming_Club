@@ -3,8 +3,10 @@ const dotenv=require("dotenv");
 
 exports.sendToken=(user,res,message)=>{
     const token= jwt.sign(
-        {id:user._id},
-        process.env.SECRET_KEY,
+        {
+        id: user._id,
+       }
+,        process.env.SECRET_KEY,
         { expiresIn: process.env.EXPIRY }
     )
     console.log("token:",token);
@@ -14,9 +16,10 @@ exports.sendToken=(user,res,message)=>{
         sameSite: "Lax",
         maxAge:30 * 24 * 60 * 60 * 1000 
       });
-    res.status(200).json({
+    return res.status(200).json({
         success:true,
         message,
-        token
+        token,
+        role:user.role
     })  
 }

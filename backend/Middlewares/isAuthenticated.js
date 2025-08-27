@@ -7,7 +7,7 @@ exports.isAuthenticated=async(req,res,next)=>{
     if(!token){
         return res.status(401).json({
             success:"Authentication token not found in cookies",
-        })
+        });
     }
     try{
     const decoded=jwt.verify(token,process.env.SECRET_KEY);
@@ -19,8 +19,7 @@ exports.isAuthenticated=async(req,res,next)=>{
         return res.status(500).json({
             success:false,
             message:"Internal Server error while authentication."
-        })
-
+        });
     }
 }
 catch(error){
