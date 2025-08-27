@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-const BASE = "https://programming-club-backend.onrender.com";
+const BASE = "https://programming-club-zq7t.onrender.com";
 
 function Signup() {
   const {
