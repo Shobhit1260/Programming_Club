@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import MemberCard from "./MemberCard";
 import { toast } from "react-toastify";
 
-const BASE = "https://programming-club-backend.onrender.com";
+const BASE = "https://programming-club-zq7t.onrender.com";
 
 function GetAll_Pendings() {
   const [pendingMembers, setPendingMembers] = useState([]);
