@@ -165,6 +165,7 @@ exports.logout=async(req,res)=>{
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", 
         sameSite: "none",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       });
       res.status(200).json({ 
         success:true,
