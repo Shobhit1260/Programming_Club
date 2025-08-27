@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { clearEditingEventId } from '../../Redux/EventSlice';
 import { toast } from 'react-toastify';
-const BASE = "http://localhost:4000/v1";
+const BASE = "https://programming-club-backend.onrender.com";
 function EditEvent({ event }) {
   const [formData, setFormData] = useState(event || {});
   const eventId = event._id;
