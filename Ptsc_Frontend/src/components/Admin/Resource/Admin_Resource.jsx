@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import Resources from './Resources';
 import { toast } from 'react-toastify';
 
-const BASE = "https://programming-club-backend.onrender.com";
+const BASE = "https://programming-club-zq7t.onrender.com";
 
 const MediaUploadForm = () => {
   const [loading, setLoading] = useState(false);
