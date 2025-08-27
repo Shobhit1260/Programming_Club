@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setEditingEventId, clearEditingEventId } from '../../Redux/EventSlice'
 import EditEvent from './EditEvent'
 import Prepared_Event from './Prepared_Event'
-import NewEvent from './newEvent'
+import NewEvent from './NewEvent'
 const BASE = "https://programming-club-backend.onrender.com";
 function Admin_Event() {
   const [events, setEvents] = useState([])
