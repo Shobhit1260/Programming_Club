@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link,Outlet } from 'react-router-dom';
-import Resource from './Resource';
-import Workshop from './Workshop';
+
 
 function Resources() {
   return (
@@ -13,7 +12,6 @@ function Resources() {
        <div className='w-full h-min flex justify-center items-center mt-16 mb-16'>
          <div className='w-1/2 flex items-center justify-center'>
          <Link to="resource" className='text-white font-serif font-bold bg-gray-600 text-xl p-4 rounded-lg'> Resource</Link>
-         {/* <Link to="workshop" className='text-white font-serif font-bold bg-gray-600 text-xl p-4 rounded-lg'> Workshop</Link> */}
          </div>
        </div>
       <Outlet />

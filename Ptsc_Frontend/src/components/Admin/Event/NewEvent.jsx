@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-
+const BASE = "http://localhost:4000/v1";
 function NewEvent() {
   const [events, setEvents] = useState([]);
   const [formData, setFormData] = useState({
@@ -21,7 +21,7 @@ function NewEvent() {
 
   const AddEvent = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:4000/v1/createEvent", {
+    const res = await fetch(`${BASE}/createEvent`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

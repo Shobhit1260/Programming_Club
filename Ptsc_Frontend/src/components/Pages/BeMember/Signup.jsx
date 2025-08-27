@@ -2,6 +2,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
+const BASE = "http://localhost:4000/v1";
+
 function Signup() {
   const {
     register,
@@ -13,7 +15,7 @@ function Signup() {
   const onSubmit = async (data) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     try {
-      const res = await fetch("http://localhost:4000/v1/SignUp", {
+      const res = await fetch(`${BASE}/SignUp`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({

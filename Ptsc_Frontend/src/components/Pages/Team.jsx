@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import TeamCard from '../Utils/TeamCard';
 
+const BASE = "http://localhost:4000/v1";
+
 function Team() {
   const [members, setMembers] = useState([]);
 
   const fetchMembers = async () => {
     try {
-      const res = await fetch("http://localhost:4000/v1/fetchMembers");
+      const res = await fetch(`${BASE}/fetchMembers`);
       const data = await res.json();
       setMembers(data.members);
     } catch (error) {

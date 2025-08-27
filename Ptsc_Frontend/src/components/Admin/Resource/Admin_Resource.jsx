@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import Resources from './Resources';
 import { toast } from 'react-toastify';
 
+const BASE = "http://localhost:4000/v1";
+
 const MediaUploadForm = () => {
   const [loading, setLoading] = useState(false);
 
@@ -25,7 +27,7 @@ const MediaUploadForm = () => {
 
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:4000/v1/upload', {
+      const res = await fetch(`${BASE}/upload`, {
         method: 'POST',
         credentials: 'include',
         body: formData,

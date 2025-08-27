@@ -3,13 +3,15 @@ import React, { useEffect, useState } from "react";
 import MemberCard from "./MemberCard";
 import { toast } from "react-toastify";
 
+const BASE = "http://localhost:4000/v1";
+
 function GetAll_Pendings() {
   const [pendingMembers, setPendingMembers] = useState([]);
   const [pendingMembersCount, setPendingMembersCount] = useState(0);
 
   const fetchPendingMembers = async () => {
     try {
-      const res = await fetch("http://localhost:4000/v1/getallpendings", {
+      const res = await fetch(`${BASE}/getallpendings`, {
         method: "GET",
         credentials: "include",
       });
@@ -27,7 +29,7 @@ function GetAll_Pendings() {
 
   const handleApprove = async (memberId) => {
     const res = await fetch(
-      `http://localhost:4000/v1/approveUser/${memberId}`,
+      `${BASE}/approveUser/${memberId}`,
       {
         method: "PATCH",
         credentials: "include",
@@ -44,7 +46,7 @@ function GetAll_Pendings() {
 
   const handleDelete = async (memberId) => {
     const res = await fetch(
-      `http://localhost:4000/v1/deniedUser/${memberId}`,
+      `${BASE}/deniedUser/${memberId}`,
       {
         method: "DELETE",
         credentials: "include",

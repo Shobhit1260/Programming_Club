@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { clearEditingEventId } from '../../Redux/EventSlice';
 import { toast } from 'react-toastify';
-
+const BASE = "http://localhost:4000/v1";
 function EditEvent({ event }) {
   const [formData, setFormData] = useState(event || {});
   const eventId = event._id;
@@ -18,7 +18,7 @@ function EditEvent({ event }) {
   const handleSave = async (e, eventId) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:4000/v1/editEvent/${eventId}`, {
+      const res = await fetch(`${BASE}/editEvent/${eventId}`, {
         method: 'PATCH',
         headers: {
           'content-type': 'application/json',

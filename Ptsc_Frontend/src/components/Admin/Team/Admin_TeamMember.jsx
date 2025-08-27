@@ -5,13 +5,15 @@ import { useSelector } from "react-redux";
 import NewMember from "./NewMember";
 import { toast } from "react-toastify";
 
+const BASE = "http://localhost:4000/v1";
+
 function Team() {
   const [members, setMembers] = useState([]);
   const editingEventId = useSelector((state) => state.event.editingEventId);
 
   const onDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:4000/v1/deleteMember/${id}`, {
+      const res = await fetch(`${BASE}/deleteMember/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -29,7 +31,7 @@ function Team() {
 
   const fetchMembers = async () => {
     try {
-      const res = await fetch("http://localhost:4000/v1/fetchMembers", {
+      const res = await fetch(`${BASE}/fetchMembers`, {
         credentials: "include",
       });
       const data = await res.json();

@@ -3,7 +3,6 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import { fetchLeaderboard } from "../../api/leaderboardApi.js"; 
 import AddToLeaderboardForm from "../../components/leaderboard/AddToLeaderboardForm.jsx";
-// import AdminControls from "../../components/leaderboard/AdminControls.jsx";
 
 export default function Leaderboard() {
   const [page, setPage] = useState(1);
@@ -12,7 +11,6 @@ export default function Leaderboard() {
   const [busy, setBusy] = useState(true);
   const [err, setErr] = useState(null);
 
-  // Read role from localStorage (as per your Navbar pattern)
   const role = useMemo(() => localStorage.getItem("role") || "normal", []);
   const isPrivileged = role === "admin" || role === "member";
 

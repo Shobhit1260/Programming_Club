@@ -1,4 +1,4 @@
-// src/api/leaderboardApi.js
+
 const BASE = "http://localhost:4000/v1";
 
 export async function addToLeaderboard(payload) {

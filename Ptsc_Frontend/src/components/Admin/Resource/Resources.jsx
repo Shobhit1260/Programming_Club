@@ -3,6 +3,8 @@ import { toast } from 'react-toastify';
 import Pagination from './Pagination';
 import { RxCross2 } from "react-icons/rx";
 
+const BASE = "http://localhost:4000/v1";
+
 function Resources() {
   const [mediaList, setMediaList] = useState([]);
   const [filteredMedia, setFilteredMedia] = useState([]);
@@ -14,7 +16,7 @@ function Resources() {
 
   const fetchMediaList = async () => {
     try {
-      const res = await fetch('http://localhost:4000/v1/getallmedia');
+      const res = await fetch(`${BASE}/getallmedia`);
       const data = await res.json();
       if (res.ok) {
         setMediaList(data.mediaList);
@@ -38,7 +40,7 @@ function Resources() {
   }, [mediaList, search]);
 
   const onDelete = async (id) => {
-    const res = await fetch(`http://localhost:4000/v1/delete/${id}`, {
+    const res = await fetch(`${BASE}/delete/${id}`, {
       method: "DELETE",
       credentials: "include",
     });
@@ -56,7 +58,7 @@ function Resources() {
     const fetchAllDownloadURLs = async () => {
       const urls = {};
       for (let media of filteredMedia) {
-        const res = await fetch(`http://localhost:4000/v1/download/${media._id}`);
+        const res = await fetch(`${BASE}/download/${media._id}`);
         const data = await res.json();
         urls[media.s3Key] = data.downloadURLforMedia;
         urls[media.thumbnailKey] = data.downloadURLforThumbnail;

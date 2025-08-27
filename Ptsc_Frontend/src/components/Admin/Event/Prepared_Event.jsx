@@ -3,12 +3,14 @@ import { useDispatch } from "react-redux";
 import { setEditingEventId } from "../../Redux/EventSlice";
 import { toast } from "react-toastify";
 
+const BASE = "http://localhost:4000/v1";
+
 function Prepared_Event({ event }) {
   const dispatch = useDispatch();
 
   const onDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:4000/v1/deleteEvent/${id}`, {
+      const res = await fetch(`${BASE}/deleteEvent/${id}`, {
         method: "DELETE",
         credentials: "include",
       });

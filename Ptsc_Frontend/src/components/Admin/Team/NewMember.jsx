@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
+const BASE = "http://localhost:4000/v1";
+
 function NewMember() {
   const [members, setMembers] = useState([]);
   const [formData, setFormData] = useState({
@@ -20,7 +22,7 @@ function NewMember() {
   const AddMember = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:4000/v1/createMember", {
+      const res = await fetch(`${BASE}/createMember`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

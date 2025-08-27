@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import Pagination from './Pagination.jsx';
 import { RxCross2 } from "react-icons/rx";
+
+const BASE = "http://localhost:4000/v1";
+
 function Resources() {
     const [mediaList,setMediaList]=useState([]);
     const [filteredMedia,setfilteredMedia]=useState([]);    
@@ -13,7 +16,7 @@ function Resources() {
 
     const fetchMediaList = async () => {
     try{
-       const res= await fetch('http://localhost:4000/v1/getallmedia');
+       const res= await fetch(`${BASE}/getallmedia`);
        const data=await res.json();
        if(res.ok){
           console.log("Media List:", data.mediaList);
@@ -44,7 +47,7 @@ useEffect(() => {
   const fetchAllDownloadURLs = async () => {
     const urls = {};
     for (let media of filteredMedia) {
-      const res = await fetch(`http://localhost:4000/v1/download/${media._id}`);
+      const res = await fetch(`${BASE}/download/${media._id}`);
       const data = await res.json();
       urls[media.s3Key] = data.downloadURLforMedia;
       urls[media.thumbnailKey] = data.downloadURLforThumbnail;
@@ -61,7 +64,7 @@ useEffect(() => {
 
   const handleDownload=async(id)=>{
     try{
-      const res=await fetch(`http://localhost:4000/v1/download/${id}`);
+      const res=await fetch(`${BASE}/download/${id}`);
       const data=await res.json();
       const fileURL= data.downloadURLforMedia;
       

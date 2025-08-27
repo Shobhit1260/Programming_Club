@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import EventCard from '../Utils/EventCard';
 
+const BASE = "http://localhost:4000/v1";
+
 function Events() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
-      const res = await fetch("http://localhost:4000/v1/fetchEvents");
+      const res = await fetch(`${BASE}/fetchEvents`);
       const data = await res.json();
       setEvents(data.events || []);
     } catch (error) {
@@ -19,7 +21,7 @@ function Events() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-b from-blue-200 to-white 

@@ -18,7 +18,7 @@ function EditTeamMember({ member }) {
   const onSave = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:4000/v1/editMember/${memberId}`, {
+      const res = await fetch(`${BASE}/editMember/${memberId}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",

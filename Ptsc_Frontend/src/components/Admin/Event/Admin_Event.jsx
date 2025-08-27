@@ -5,7 +5,7 @@ import { setEditingEventId, clearEditingEventId } from '../../Redux/EventSlice'
 import EditEvent from './EditEvent'
 import Prepared_Event from './Prepared_Event'
 import NewEvent from './newEvent'
-
+const BASE = "http://localhost:4000/v1";
 function Admin_Event() {
   const [events, setEvents] = useState([])
   const [eventsCount, setEventsCount] = useState(0)
@@ -13,7 +13,7 @@ function Admin_Event() {
   const dispatch = useDispatch()
 
   const fetchData = async () => {
-    const res = await fetch("http://localhost:4000/v1/fetchEvents", {
+    const res = await fetch(`${BASE}/fetchEvents`, {
       method: "GET",
     })
     const data = await res.json()
