@@ -5,7 +5,7 @@ import { setEditingEventId, clearEditingEventId } from '../../Redux/EventSlice'
 import EditEvent from './EditEvent'
 import Prepared_Event from './Prepared_Event'
 import NewEvent from './newEvent'
-const BASE = "http://localhost:4000/v1";
+const BASE = "https://programming-club-backend.onrender.com";
 function Admin_Event() {
   const [events, setEvents] = useState([])
   const [eventsCount, setEventsCount] = useState(0)
