@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import Pagination from './Pagination';
 import { RxCross2 } from "react-icons/rx";
 
-const BASE = "https://programming-club-backend.onrender.com";
+const BASE = "https://programming-club-zq7t.onrender.com";
 
 function Resources() {
   const [mediaList, setMediaList] = useState([]);
