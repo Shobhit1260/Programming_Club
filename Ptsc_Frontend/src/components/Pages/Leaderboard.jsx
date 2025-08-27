@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import { fetchLeaderboard } from "../../api/leaderboardApi.js"; 
 import AddToLeaderboardForm from "../../components/leaderboard/AddToLeaderboardForm.jsx";
-import AdminControls from "../../components/leaderboard/AdminControls.jsx";
+// import AdminControls from "../../components/leaderboard/AdminControls.jsx";
 
 export default function Leaderboard() {
   const [page, setPage] = useState(1);
@@ -49,7 +49,7 @@ export default function Leaderboard() {
 
       <div className="max-w-6xl mx-auto flex flex-col gap-6">
         {/* Admin / Member Controls */}
-        {isPrivileged && <AdminControls onAfterAction={load} />}
+        {/* {isPrivileged && <AdminControls onAfterAction={load} />} */}
 
         {/* Add form (available to all) */}
         <AddToLeaderboardForm />
