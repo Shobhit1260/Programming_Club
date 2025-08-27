@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import TeamCard from '../Utils/TeamCard';
 
-const BASE = "http://localhost:4000/v1";
+const BASE = "https://programming-club-backend.onrender.com";
 
 function Team() {
   const [members, setMembers] = useState([]);
