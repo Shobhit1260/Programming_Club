@@ -27,7 +27,7 @@ const MediaUploadForm = () => {
 
     try {
       setLoading(true);
-      const res = await fetch(`${BASE}/upload`, {
+      const res = await fetch(`${BASE}/v1/upload`, {
         method: 'POST',
         credentials: 'include',
         body: formData,
