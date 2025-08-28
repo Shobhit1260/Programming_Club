@@ -4,17 +4,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setEditingEventId, clearEditingEventId } from '../../Redux/EventSlice'
 import EditEvent from './EditEvent'
 import Prepared_Event from './Prepared_Event'
-
 import NewEvent from './NewEvent'
-import  BASE  from '../../../api/config'
-
-
+import BASE from '../../../api/config'
 
 function Admin_Event() {
-  const [events, setEvents] = useState([])
-  const [eventsCount, setEventsCount] = useState(0)
-  const editingEventId = useSelector((state) => state.event.editingEventId)
-  const dispatch = useDispatch()
+
+  const [events, setEvents] = useState([]);
+  const [eventsCount, setEventsCount] = useState(0);
+  const editingEventId = useSelector((state) => state.event.editingEventId);
+  const dispatch = useDispatch();
 
   const fetchData = async () => {
     const res = await fetch(`${BASE}/v1/fetchEvents`, {

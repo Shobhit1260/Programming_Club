@@ -11,7 +11,7 @@ function Home() {
        {/* hero section */}
        <section>
             <div className='pt-24 bg-gradient-to-b from-blue-500 to-white dark:from-gray-800 dark:to-gray-800  flex justify-center items-center flex-col gap-4'>
-                <h1 className='font-bold text-6xl text-black dark:text-white'>Programming and Technical Skill Club</h1>
+                <h1 className='font-bold text-4xl text-black dark:text-white'>Programming and Technical Skill Club</h1>
                 <h2 className='font-bold text-6xl text-cyan-600 '>KNIT Sultanpur</h2>
                 <h3 className='text-md text-xl text-gray-500 dark:text-gray-50'>Empowering students through codes, innovation and technology.</h3>
                 <button className='bg-cyan-600 text-white px-4 py-2 text-2xl rounded-lg mt-4'>join us</button>

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { clearEditingEventId } from '../../Redux/EventSlice';
 import { toast } from 'react-toastify';
-
-import  BASE  from '../../../api/config'
+import  BASE  from '../../../api/config';
 
 function EditEvent({ event,fetchData }) {
 
