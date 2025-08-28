@@ -13,7 +13,7 @@ function Admin_Event() {
   const dispatch = useDispatch()
 
   const fetchData = async () => {
-    const res = await fetch(`${BASE}/fetchEvents`, {
+    const res = await fetch(`${BASE}/v1/fetchEvents`, {
       method: "GET",
     })
     const data = await res.json()
