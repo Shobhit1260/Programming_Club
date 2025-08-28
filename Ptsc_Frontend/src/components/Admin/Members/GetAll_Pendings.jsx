@@ -11,7 +11,7 @@ function GetAll_Pendings() {
 
   const fetchPendingMembers = async () => {
     try {
-      const res = await fetch(`${BASE}/getallpendings`, {
+      const res = await fetch(`${BASE}/v1/getallpendings`, {
         method: "GET",
         credentials: "include",
       });
