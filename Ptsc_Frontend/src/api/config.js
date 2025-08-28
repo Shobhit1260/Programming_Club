@@ -1,3 +1,3 @@
-const BASE="http://localhost:4000";
+const BASE="https://programming-club-46ae.onrender.com";
 
 export default BASE;
