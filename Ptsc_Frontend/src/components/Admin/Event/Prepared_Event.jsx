@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { setEditingEventId } from "../../Redux/EventSlice";
 import { toast } from "react-toastify";
 
-const BASE = "https://programming-club-zq7t.onrender.com";
+const BASE = "https://programming-club-46ae.onrender.com";
 
 function Prepared_Event({ event }) {
   const dispatch = useDispatch();
