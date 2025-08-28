@@ -8,7 +8,7 @@ function Team() {
 
   const fetchMembers = async () => {
     try {
-      const res = await fetch(`${BASE}/fetchMembers`);
+      const res = await fetch(`${BASE}/v1/fetchMembers`);
       const data = await res.json();
       setMembers(data.members);
     } catch (error) {
