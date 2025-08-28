@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import NewMember from "./NewMember";
 import { toast } from "react-toastify";
 
-const BASE = "http://localhost:4000/v1";
+const BASE = "https://programming-club-46ae.onrender.com";
 
 function Team() {
   const [members, setMembers] = useState([]);
@@ -13,7 +13,7 @@ function Team() {
 
   const onDelete = async (id) => {
     try {
-      const res = await fetch(`${BASE}/deleteMember/${id}`, {
+      const res = await fetch(`${BASE}/v1/deleteMember/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
