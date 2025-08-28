@@ -9,7 +9,7 @@ function Events() {
 
   const fetchData = async () => {
     try {
-      const res = await fetch(`${BASE}/fetchEvents`);
+      const res = await fetch(`${BASE}/v1/fetchEvents`);
       const data = await res.json();
       setEvents(data.events || []);
     } catch (error) {
