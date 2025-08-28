@@ -18,7 +18,7 @@ function EditEvent({ event }) {
   const handleSave = async (e, eventId) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${BASE}/editEvent/${eventId}`, {
+      const res = await fetch(`${BASE}/v1/editEvent/${eventId}`, {
         method: 'PATCH',
         headers: {
           'content-type': 'application/json',
