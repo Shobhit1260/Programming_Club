@@ -7,7 +7,7 @@ exports.sendToken=(user,res,message)=>{
 ,        process.env.SECRET_KEY,
         { expiresIn: process.env.EXPIRY }
     )
-    console.log("token:",token);
+    
     res.cookie("token", token, {
         httpOnly: true,
         secure: true, 
