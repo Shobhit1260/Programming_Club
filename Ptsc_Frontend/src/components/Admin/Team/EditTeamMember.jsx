@@ -3,9 +3,14 @@ import { useDispatch } from "react-redux";
 import { clearEditingEventId } from "../../Redux/EventSlice";
 import { toast } from "react-toastify";
 
+<<<<<<< HEAD
 import  BASE  from '../../../api/config'
 
 function EditTeamMember({ member,fetchMembers }) {
+=======
+const BASE=`https://programming-club-46ae.onrender.com`;
+function EditTeamMember({ member }) {
+>>>>>>> 7a15d5036515a617cc23c460850248068f3ecf2c
   const [formData, setFormData] = useState(member || {});
   const memberId = member._id;
   const dispatch = useDispatch();

@@ -3,7 +3,11 @@ import { toast } from 'react-toastify';
 import Pagination from './Pagination';
 import { RxCross2 } from "react-icons/rx";
 
+<<<<<<< HEAD
 import  BASE  from '../../../api/config'
+=======
+const BASE = "https://programming-club-46ae.onrender.com";
+>>>>>>> 7a15d5036515a617cc23c460850248068f3ecf2c
 
 function Resources({fetchMediaList, mediaList, filteredMedia, setFilteredMedia, setMediaList}) {
   //  const [mediaList, setMediaList] = useState([]);
@@ -14,7 +18,26 @@ function Resources({fetchMediaList, mediaList, filteredMedia, setFilteredMedia, 
   const [preview, setPreview] = useState(null);
   const [downloadURLs, setDownloadURLs] = useState({});
 
+<<<<<<< HEAD
  
+=======
+  const fetchMediaList = async () => {
+    try {
+      const res = await fetch(`${BASE}/v1/getallmedia`);
+      const data = await res.json();
+      if (res.ok) {
+        setMediaList(data.mediaList);
+        setFilteredMedia(data.mediaList);
+      }
+    } catch (error) {
+      console.error("Error fetching media list:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMediaList();
+  }, []);
+>>>>>>> 7a15d5036515a617cc23c460850248068f3ecf2c
 
   useEffect(() => {
     const filtered = mediaList.filter(media =>

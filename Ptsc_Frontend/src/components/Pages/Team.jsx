@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import TeamCard from '../Utils/TeamCard';
 
+<<<<<<< HEAD
 import  BASE  from '../../api/config'
+=======
+const BASE = "https://programming-club-46ae.onrender.com";
+>>>>>>> 7a15d5036515a617cc23c460850248068f3ecf2c
 
 function Team() {
   const [members, setMembers] = useState([]);
 
   const fetchMembers = async () => {
     try {
-      const res = await fetch(`${BASE}/fetchMembers`);
+      const res = await fetch(`${BASE}/v1/fetchMembers`);
       const data = await res.json();
       setMembers(data.members);
     } catch (error) {
