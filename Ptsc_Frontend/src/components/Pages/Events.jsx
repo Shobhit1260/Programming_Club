@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import EventCard from '../Utils/EventCard';
 
-const BASE = "https://programming-club-zq7t.onrender.com";
+const BASE = "https://programming-club-46ae.onrender.com";
 
 function Events() {
   const [events, setEvents] = useState([]);
