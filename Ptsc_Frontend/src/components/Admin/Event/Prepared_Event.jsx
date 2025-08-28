@@ -10,7 +10,7 @@ function Prepared_Event({ event }) {
 
   const onDelete = async (id) => {
     try {
-      const res = await fetch(`${BASE}/deleteEvent/${id}`, {
+      const res = await fetch(`${BASE}/v1/deleteEvent/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
