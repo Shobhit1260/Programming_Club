@@ -6,7 +6,7 @@ function Cards({title,description,buttonText,link}) {
   const [bool,setBool]=useState(true);
   const desc=`${(!bool)?description:description.slice(0,100)+"...."}`;
   return (
-    <div className='dark:bg-gray-900 font-serif flex flex-col items-start justify-center gap-4 w-1/3 h-[500px] bg-white shadow-lg rounded-lg p-4 m-8'>
+    <div className='dark:bg-gray-900 font-serif flex flex-col items-start justify-center gap-4 w-1/3 h-max bg-white shadow-lg rounded-lg p-4 m-8'>
         <span className=' text-lg font-bold text-black dark:text-white'>{title}</span>
         <p className='text-gray-500 dark:text-white' >{desc}
         {bool?<button onClick={()=>setBool(!bool)} className='text-blue-300'>more</button>:<button onClick={()=>setBool(!bool)} className='text-blue-300'>less</button>}
