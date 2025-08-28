@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { clearEditingEventId } from "../../Redux/EventSlice";
 import { toast } from "react-toastify";
 
+const BASE=`https://programming-club-46ae.onrender.com`;
 function EditTeamMember({ member }) {
   const [formData, setFormData] = useState(member || {});
   const memberId = member._id;
@@ -18,7 +19,7 @@ function EditTeamMember({ member }) {
   const onSave = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${BASE}/editMember/${memberId}`, {
+      const res = await fetch(`${BASE}/v1/editMember/${memberId}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
