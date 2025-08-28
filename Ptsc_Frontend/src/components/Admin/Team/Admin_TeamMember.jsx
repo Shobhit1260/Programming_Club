@@ -4,12 +4,9 @@ import EditTeamMember from "./EditTeamMember";
 import { useSelector } from "react-redux";
 import NewMember from "./NewMember";
 import { toast } from "react-toastify";
-<<<<<<< HEAD
-import  BASE  from '../../../api/config'
-=======
 
-const BASE = "https://programming-club-46ae.onrender.com";
->>>>>>> 7a15d5036515a617cc23c460850248068f3ecf2c
+import  BASE  from '../../../api/config'
+
 
 function Team() {
   const [members, setMembers] = useState([]);

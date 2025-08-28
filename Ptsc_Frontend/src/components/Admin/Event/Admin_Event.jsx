@@ -4,15 +4,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setEditingEventId, clearEditingEventId } from '../../Redux/EventSlice'
 import EditEvent from './EditEvent'
 import Prepared_Event from './Prepared_Event'
-<<<<<<< HEAD
-import NewEvent from './newEvent'
+
+import NewEvent from './NewEvent'
 import  BASE  from '../../../api/config'
 
-console.log("BASE URL:", BASE); // Debugging line to check BASE value
-=======
-import NewEvent from './NewEvent'
-const BASE = "https://programming-club-46ae.onrender.com";
->>>>>>> 7a15d5036515a617cc23c460850248068f3ecf2c
+
+
 function Admin_Event() {
   const [events, setEvents] = useState([])
   const [eventsCount, setEventsCount] = useState(0)

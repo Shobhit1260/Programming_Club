@@ -4,11 +4,7 @@ import Resources from './Resources';
 import { toast } from 'react-toastify';
 import fetchMediaList from './Resources';
 
-<<<<<<< HEAD
 import  BASE  from '../../../api/config'
-=======
-const BASE = "https://programming-club-46ae.onrender.com";
->>>>>>> 7a15d5036515a617cc23c460850248068f3ecf2c
 
 const MediaUploadForm = () => {
   const [loading, setLoading] = useState(false);
@@ -20,6 +16,7 @@ const MediaUploadForm = () => {
     reset,
     formState: { errors },
   } = useForm();
+  
    const fetchMediaList = async () => {
       try {
         const res = await fetch(`${BASE}/v1/getallmedia`);

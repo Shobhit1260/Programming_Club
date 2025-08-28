@@ -1,10 +1,5 @@
 import BASE from './config'
 
-<<<<<<< HEAD
-=======
-const BASE = "https://programming-club-46ae.onrender.com";
->>>>>>> 7a15d5036515a617cc23c460850248068f3ecf2c
-
 export async function addToLeaderboard(payload) {
   const res = await fetch(`${BASE}/v1/leaderboard/add`, {
     method: "POST",
