@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-const BASE = "http://localhost:4000/v1";
+const BASE = "https://programming-club-46ae.onrender.com";
 
 function NewMember() {
   const [members, setMembers] = useState([]);
@@ -22,7 +22,7 @@ function NewMember() {
   const AddMember = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${BASE}/createMember`, {
+      const res = await fetch(`${BASE}/v1/createMember`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
