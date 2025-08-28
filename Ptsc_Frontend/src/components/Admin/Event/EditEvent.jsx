@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { clearEditingEventId } from '../../Redux/EventSlice';
 import { toast } from 'react-toastify';
-const BASE = "http://localhost:4000/v1";
-function EditEvent({ event }) {
+import  BASE  from '../../../api/config'
+
+function EditEvent({ event,fetchData }) {
   const [formData, setFormData] = useState(event || {});
   const eventId = event._id;
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ function EditEvent({ event }) {
   const handleSave = async (e, eventId) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${BASE}/editEvent/${eventId}`, {
+      const res = await fetch(`${BASE}/v1/editEvent/${eventId}`, {
         method: 'PATCH',
         headers: {
           'content-type': 'application/json',
@@ -33,6 +34,7 @@ function EditEvent({ event }) {
         toast.success('Event updated successfully');
         const updatedEvent = await res.json();
         setFormData(updatedEvent.event);
+        fetchData();
         dispatch(clearEditingEventId());
       }
     } catch (error) {

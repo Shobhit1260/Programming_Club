@@ -3,7 +3,9 @@ import { useDispatch } from "react-redux";
 import { clearEditingEventId } from "../../Redux/EventSlice";
 import { toast } from "react-toastify";
 
-function EditTeamMember({ member }) {
+import  BASE  from '../../../api/config'
+
+function EditTeamMember({ member,fetchMembers }) {
   const [formData, setFormData] = useState(member || {});
   const memberId = member._id;
   const dispatch = useDispatch();
@@ -18,7 +20,7 @@ function EditTeamMember({ member }) {
   const onSave = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${BASE}/editMember/${memberId}`, {
+      const res = await fetch(`${BASE}/v1/editMember/${memberId}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -28,10 +30,11 @@ function EditTeamMember({ member }) {
       });
 
       const data = await res.json();
-
+      
       if (res.ok) {
         toast.success("Member details saved successfully!");
         setFormData(data.member);
+        fetchMembers();
         dispatch(clearEditingEventId());
       } else {
         toast.error("Please fill all fields");

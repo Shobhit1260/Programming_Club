@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import TeamCard from '../Utils/TeamCard';
 
-const BASE = "http://localhost:4000/v1";
+import  BASE  from '../../api/config'
 
 function Team() {
   const [members, setMembers] = useState([]);

@@ -5,7 +5,9 @@ import { setEditingEventId, clearEditingEventId } from '../../Redux/EventSlice'
 import EditEvent from './EditEvent'
 import Prepared_Event from './Prepared_Event'
 import NewEvent from './newEvent'
-const BASE = "http://localhost:4000/v1";
+import  BASE  from '../../../api/config'
+
+console.log("BASE URL:", BASE); // Debugging line to check BASE value
 function Admin_Event() {
   const [events, setEvents] = useState([])
   const [eventsCount, setEventsCount] = useState(0)
@@ -13,7 +15,7 @@ function Admin_Event() {
   const dispatch = useDispatch()
 
   const fetchData = async () => {
-    const res = await fetch(`${BASE}/fetchEvents`, {
+    const res = await fetch(`${BASE}/v1/fetchEvents`, {
       method: "GET",
     })
     const data = await res.json()
@@ -36,9 +38,9 @@ function Admin_Event() {
             if (!event) return null
             const isEdit = editingEventId === event._id
             return isEdit ? (
-              <EditEvent key={event._id} event={event} />
+              <EditEvent key={event._id} event={event} fetchData={fetchData}/>
             ) : (
-              <Prepared_Event key={event._id} event={event} />
+              <Prepared_Event key={event._id} event={event} fetchData={fetchData}/>
             )
           })}
           {events.length === 0 && (
@@ -47,7 +49,7 @@ function Admin_Event() {
             </span>
           )}
         </div>
-        <NewEvent />
+        <NewEvent fetchData={fetchData} />
       </div>
     </div>
   )

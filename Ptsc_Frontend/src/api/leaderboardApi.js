@@ -1,8 +1,8 @@
+import BASE from './config'
 
-const BASE = "http://localhost:4000/v1";
 
 export async function addToLeaderboard(payload) {
-  const res = await fetch(`${BASE}/leaderboard/add`, {
+  const res = await fetch(`${BASE}/v1/leaderboard/add`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",

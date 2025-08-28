@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setEditingEventId } from "../../Redux/EventSlice";
 
-function TeamMemberCard({ member, onDelete }) {
+function TeamMemberCard({ member, onDelete,fetchMembers }) {
   const dispatch = useDispatch();
 
   return (

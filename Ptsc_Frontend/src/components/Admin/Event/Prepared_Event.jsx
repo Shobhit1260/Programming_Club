@@ -3,20 +3,21 @@ import { useDispatch } from "react-redux";
 import { setEditingEventId } from "../../Redux/EventSlice";
 import { toast } from "react-toastify";
 
-const BASE = "http://localhost:4000/v1";
+import  BASE  from '../../../api/config'
 
-function Prepared_Event({ event }) {
+function Prepared_Event({ event,fetchData }) {
   const dispatch = useDispatch();
 
   const onDelete = async (id) => {
     try {
-      const res = await fetch(`${BASE}/deleteEvent/${id}`, {
+      const res = await fetch(`${BASE}/v1/deleteEvent/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
 
       if (res.ok) {
         toast.success("Event successfully deleted.");
+        fetchData();
       } else {
         toast.warning("Failed to delete event.");
       }
@@ -34,10 +35,10 @@ function Prepared_Event({ event }) {
         </h1>
         <h2 className="text-gray-600 dark:text-gray-300">{event.description}</h2>
         <h3 className="text-gray-600 dark:text-gray-400">
-          {event.date && event.date.substring(0, 10)}
+         Date: {event.date && event.date.substring(0, 10)}
         </h3>
-        <h4 className="text-gray-600 dark:text-gray-400">{event.time}</h4>
-        <h4 className="text-gray-600 dark:text-gray-400">{event.status}</h4>
+        <h4 className="text-gray-600 dark:text-gray-400">Time : {event.time}</h4>
+        <h4 className="text-gray-600 dark:text-gray-400">Status : {event.status}</h4>
       </div>
 
       {/* Action Buttons */}

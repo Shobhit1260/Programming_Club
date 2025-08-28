@@ -1,20 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Resources from './Resources';
 import { toast } from 'react-toastify';
+import fetchMediaList from './Resources';
 
-const BASE = "http://localhost:4000/v1";
+import  BASE  from '../../../api/config'
 
 const MediaUploadForm = () => {
   const [loading, setLoading] = useState(false);
-
+  const [mediaList, setMediaList] = useState([]);
+  const [filteredMedia, setFilteredMedia] = useState([]);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-
+   const fetchMediaList = async () => {
+      try {
+        const res = await fetch(`${BASE}/v1/getallmedia`);
+        const data = await res.json();
+        if (res.ok) {
+          setMediaList(data.mediaList);
+          setFilteredMedia(data.mediaList);
+        }
+      } catch (error) {
+        console.error("Error fetching media list:", error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchMediaList();
+    }, []);
+    
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append('title', data.title);
@@ -27,7 +45,7 @@ const MediaUploadForm = () => {
 
     try {
       setLoading(true);
-      const res = await fetch(`${BASE}/upload`, {
+      const res = await fetch(`${BASE}/v1/upload`, {
         method: 'POST',
         credentials: 'include',
         body: formData,
@@ -36,6 +54,7 @@ const MediaUploadForm = () => {
       const result = await res.json();
       if (res.ok) {
         toast.success('Upload successful!');
+        fetchMediaList();
         reset();
       } else {
         toast.error('Upload failed: ' + result.message);
@@ -49,7 +68,7 @@ const MediaUploadForm = () => {
 
   return (
     <div className="w-full mx-auto mt-10 p-6 bg-white dark:bg-gray-900 shadow-lg rounded-xl transition-colors duration-300">
-      <Resources />
+      <Resources mediaList={mediaList} filteredMedia={filteredMedia} fetchMediaList={fetchMediaList} setFilteredMedia={setFilteredMedia} setMediaList={setMediaList}/>
 
       {loading && (
         <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 my-4">

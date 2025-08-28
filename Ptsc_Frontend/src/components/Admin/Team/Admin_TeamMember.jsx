@@ -4,8 +4,7 @@ import EditTeamMember from "./EditTeamMember";
 import { useSelector } from "react-redux";
 import NewMember from "./NewMember";
 import { toast } from "react-toastify";
-
-const BASE = "http://localhost:4000/v1";
+import  BASE  from '../../../api/config'
 
 function Team() {
   const [members, setMembers] = useState([]);
@@ -13,13 +12,14 @@ function Team() {
 
   const onDelete = async (id) => {
     try {
-      const res = await fetch(`${BASE}/deleteMember/${id}`, {
+      const res = await fetch(`${BASE}/v1/deleteMember/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
 
       if (res.ok) {
         setMembers((prev) => prev.filter((m) => m._id !== id));
+        fetchMembers();
         toast.success("Member successfully deleted.");
       } else {
         toast.warning("Failed to delete.");
@@ -31,7 +31,7 @@ function Team() {
 
   const fetchMembers = async () => {
     try {
-      const res = await fetch(`${BASE}/fetchMembers`, {
+      const res = await fetch(`${BASE}/v1/fetchMembers`, {
         credentials: "include",
       });
       const data = await res.json();
@@ -63,12 +63,13 @@ function Team() {
           if (!member) return null;
           const isEdit = member._id === editingEventId;
           return isEdit ? (
-            <EditTeamMember key={member._id} member={member} />
+            <EditTeamMember key={member._id} member={member} fetchMembers={fetchMembers}/>
           ) : (
             <TeamMemberCard
               key={member._id}
               member={member}
               onDelete={onDelete}
+              fetchMembers={fetchMembers}
             />
           );
         })}
@@ -83,7 +84,7 @@ function Team() {
 
       {/* New Member Form */}
       <div className="mt-10">
-        <NewMember />
+        <NewMember fetchMembers={fetchMembers}/>
       </div>
     </div>
   );

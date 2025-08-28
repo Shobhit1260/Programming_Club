@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-const BASE = "http://localhost:4000/v1";
+import  BASE  from '../../../api/config'
 
-function NewMember() {
+function NewMember({fetchMembers}) {
   const [members, setMembers] = useState([]);
   const [formData, setFormData] = useState({
     imageUrl: "",
@@ -22,7 +22,7 @@ function NewMember() {
   const AddMember = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${BASE}/createMember`, {
+      const res = await fetch(`${BASE}/v1/createMember`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -35,6 +35,7 @@ function NewMember() {
 
       if (res.ok) {
         toast.success("Member added successfully!");
+        fetchMembers();
         setFormData({
           imageUrl: "",
           name: "",

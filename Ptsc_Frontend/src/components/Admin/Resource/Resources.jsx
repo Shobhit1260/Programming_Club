@@ -3,33 +3,18 @@ import { toast } from 'react-toastify';
 import Pagination from './Pagination';
 import { RxCross2 } from "react-icons/rx";
 
-const BASE = "http://localhost:4000/v1";
+import  BASE  from '../../../api/config'
 
-function Resources() {
-  const [mediaList, setMediaList] = useState([]);
-  const [filteredMedia, setFilteredMedia] = useState([]);
+function Resources({fetchMediaList, mediaList, filteredMedia, setFilteredMedia, setMediaList}) {
+  //  const [mediaList, setMediaList] = useState([]);
+  // const [filteredMedia, setFilteredMedia] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8); // Show more items on bigger screens
   const [search, setSearch] = useState("");
   const [preview, setPreview] = useState(null);
   const [downloadURLs, setDownloadURLs] = useState({});
 
-  const fetchMediaList = async () => {
-    try {
-      const res = await fetch(`${BASE}/getallmedia`);
-      const data = await res.json();
-      if (res.ok) {
-        setMediaList(data.mediaList);
-        setFilteredMedia(data.mediaList);
-      }
-    } catch (error) {
-      console.error("Error fetching media list:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchMediaList();
-  }, []);
+ 
 
   useEffect(() => {
     const filtered = mediaList.filter(media =>
@@ -40,7 +25,7 @@ function Resources() {
   }, [mediaList, search]);
 
   const onDelete = async (id) => {
-    const res = await fetch(`${BASE}/delete/${id}`, {
+    const res = await fetch(`${BASE}/v1/delete/${id}`, {
       method: "DELETE",
       credentials: "include",
     });
@@ -58,7 +43,7 @@ function Resources() {
     const fetchAllDownloadURLs = async () => {
       const urls = {};
       for (let media of filteredMedia) {
-        const res = await fetch(`${BASE}/download/${media._id}`);
+        const res = await fetch(`${BASE}/v1/download/${media._id}`);
         const data = await res.json();
         urls[media.s3Key] = data.downloadURLforMedia;
         urls[media.thumbnailKey] = data.downloadURLforThumbnail;

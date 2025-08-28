@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import MemberCard from "./MemberCard";
 import { toast } from "react-toastify";
 
-const BASE = "http://localhost:4000/v1";
+import  BASE  from '../../../api/config'
 
 function GetAll_Pendings() {
   const [pendingMembers, setPendingMembers] = useState([]);
@@ -11,7 +11,7 @@ function GetAll_Pendings() {
 
   const fetchPendingMembers = async () => {
     try {
-      const res = await fetch(`${BASE}/getallpendings`, {
+      const res = await fetch(`${BASE}/v1/getallpendings`, {
         method: "GET",
         credentials: "include",
       });
@@ -29,7 +29,7 @@ function GetAll_Pendings() {
 
   const handleApprove = async (memberId) => {
     const res = await fetch(
-      `${BASE}/approveUser/${memberId}`,
+      `${BASE}/v1/approveUser/${memberId}`,
       {
         method: "PATCH",
         credentials: "include",
@@ -39,14 +39,15 @@ function GetAll_Pendings() {
     setPendingMembers((prev) =>
       prev.filter((member) => member._id !== memberId)
     );
-
+    fetchPendingMembers();     
     if (res.ok) toast.success("Member approved successfully.");
+    
     else toast.warning("Something went wrong.");
   };
 
   const handleDelete = async (memberId) => {
     const res = await fetch(
-      `${BASE}/deniedUser/${memberId}`,
+      `${BASE}/v1/deniedUser/${memberId}`,
       {
         method: "DELETE",
         credentials: "include",
@@ -56,7 +57,7 @@ function GetAll_Pendings() {
     setPendingMembers((prev) =>
       prev.filter((member) => member._id !== memberId)
     );
-
+    fetchPendingMembers();
     if (res.ok) toast.success("Request successfully denied.");
     else toast.warning("Something went wrong.");
   };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import EventCard from '../Utils/EventCard';
 
-const BASE = "http://localhost:4000/v1";
+import  BASE  from '../../api/config'
 
 function Events() {
   const [events, setEvents] = useState([]);
@@ -9,7 +9,7 @@ function Events() {
 
   const fetchData = async () => {
     try {
-      const res = await fetch(`${BASE}/fetchEvents`);
+      const res = await fetch(`${BASE}/v1/fetchEvents`);
       const data = await res.json();
       setEvents(data.events || []);
     } catch (error) {

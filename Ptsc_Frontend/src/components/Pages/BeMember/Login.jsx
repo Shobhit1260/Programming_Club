@@ -4,7 +4,7 @@ import Signup from "./Signup";
 import { RxCross1 } from "react-icons/rx";
 import { toast } from "react-toastify";
 
-const BASE = "http://localhost:4000/v1";
+import  BASE  from '../../../api/config'
 
 function Login() {
   const {
@@ -17,7 +17,7 @@ function Login() {
   const onSubmit = async (data) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const res = await fetch(`${BASE}/Login`, {
+    const res = await fetch(`${BASE}/v1/Login`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       credentials: "include",
