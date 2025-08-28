@@ -17,7 +17,7 @@ function Login() {
   const onSubmit = async (data) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const res = await fetch(`${BASE}/Login`, {
+    const res = await fetch(`${BASE}/v1/Login`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       credentials: "include",
