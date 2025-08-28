@@ -15,7 +15,7 @@ function Signup() {
   const onSubmit = async (data) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     try {
-      const res = await fetch(`${BASE}/SignUp`, {
+      const res = await fetch(`${BASE}/v1/SignUp`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
