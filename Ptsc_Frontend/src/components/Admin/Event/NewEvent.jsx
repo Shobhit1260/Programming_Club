@@ -21,7 +21,7 @@ function NewEvent() {
 
   const AddEvent = async (e) => {
     e.preventDefault();
-    const res = await fetch(`${BASE}/createEvent`, {
+    const res = await fetch(`${BASE}/v1/createEvent`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
