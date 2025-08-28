@@ -16,7 +16,7 @@ function Resources() {
 
     const fetchMediaList = async () => {
     try{
-       const res= await fetch(`${BASE}/getallmedia`);
+       const res= await fetch(`${BASE}/v1/getallmedia`);
        const data=await res.json();
        if(res.ok){
           console.log("Media List:", data.mediaList);
