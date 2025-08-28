@@ -37,7 +37,7 @@ function Team() {
       </div>
 
       {/* Team Members Grid */}
-      <div className="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-16 pb-16 px-6 md:px-4 lg:px-24">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-16 pb-16 px-6 md:px-4 lg:px-24">
         {members.map((member) => {
           if (!member) return null;
           return (
