@@ -15,7 +15,7 @@ const port=process.env.PORT||4000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: "https://programming-club-ksh4.onrender.com", 
+  origin: "https://programming-club-46ae.onrender.com", 
   credentials: true
 }));
 app.use(cookieParser());
