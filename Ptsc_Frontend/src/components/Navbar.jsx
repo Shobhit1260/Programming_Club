@@ -14,7 +14,7 @@ function Navbar() {
   };
 
   const role = localStorage.getItem("role");
-  console.log("role in navbar:", role);
+
   const handleLogout = () => {
     localStorage.removeItem("role"); 
     navigate("/login"); 
@@ -46,7 +46,7 @@ function Navbar() {
         </div>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex gap-8 text-gray-700 dark:text-white text-sm items-center">
+        <div className="hidden md:flex gap-6 text-gray-700 dark:text-white text-sm items-center">
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
           <Link to="/team">Teams</Link>
