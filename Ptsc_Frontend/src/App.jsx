@@ -24,7 +24,7 @@ function App() {
     <div className="min-h-screen w-full flex flex-col bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
       <Navbar />
 
-      <main className="flex-1 w-full mx-auto ">
+      <main className="w-full mx-auto">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
