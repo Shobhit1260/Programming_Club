@@ -42,13 +42,13 @@ function Login() {
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-b from-blue-200 to-white 
-      dark:from-gray-800 dark:to-gray-900 flex flex-col justify-center items-center px-4 lg:py-24 lg:px-12">
+      dark:from-gray-800 dark:to-gray-900 flex flex-col justify-center items-center px-4 md:py-24 lg:px-12 lg:py-24 lg:px-12">
       
       <div className="flex flex-col lg:flex-row justify-between items-center gap-12 lg:gap-20 w-full max-w-6xl">
         
         {/* Left Side Text */}
         <div className="flex flex-col gap-6 text-center lg:text-left">
-          <h1 className="text-black font-bold text-3xl sm:text-4xl md:text-5xl font-serif dark:text-white leading-snug">
+          <h1 className="text-black font-bold text-2xl sm:text-4xl md:text-5xl font-serif dark:text-white leading-snug">
             More than just code
           </h1>
           <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg font-serif">
