@@ -42,7 +42,7 @@ function Login() {
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-b from-blue-200 to-white 
-      dark:from-gray-800 dark:to-gray-900 flex flex-col justify-center items-center px-4 lg:py-16">
+      dark:from-gray-800 dark:to-gray-900 flex flex-col justify-center items-center px-4 lg:py-24 lg:px-12">
       
       <div className="flex flex-col lg:flex-row justify-between items-center gap-12 lg:gap-20 w-full max-w-6xl">
         
