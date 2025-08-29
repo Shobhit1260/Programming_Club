@@ -7,7 +7,7 @@ function Cards({ title, description, buttonText, link }) {
   const desc = bool ? description.slice(0, 100) + "..." : description;
 
   return (
-    <div className='dark:bg-gray-900 font-serif flex flex-col items-start justify-center gap-4 w-1/3 md:w-11/12 h-max bg-white shadow-lg rounded-lg p-4 m-8'>
+    <div className='dark:bg-gray-900 font-serif flex flex-col items-start justify-center gap-4 md:w-1/3 w-11/12 h-max bg-white shadow-lg rounded-lg p-4 m-8'>
       <span className='text-lg font-bold text-black dark:text-white'>{title}</span>
       <p className='text-gray-500 dark:text-white'>
         {desc}
