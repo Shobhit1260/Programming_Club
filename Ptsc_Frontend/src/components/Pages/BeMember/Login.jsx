@@ -48,7 +48,7 @@ function Login() {
         
         {/* Left Side Text */}
         <div className="flex flex-col gap-6 text-center lg:text-left">
-          <h1 className="text-black font-bold text-xl sm:text-2xl md:text-2xl lg:text-8xl font-serif dark:text-white leading-snug">
+          <h1 className="text-black font-bold text-xl sm:text-2xl md:text-4xl lg:text-4xl font-serif dark:text-white leading-snug">
             More than just code
           </h1>
           <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg font-serif">
