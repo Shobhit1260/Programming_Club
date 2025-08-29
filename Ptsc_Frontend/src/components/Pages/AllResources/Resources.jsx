@@ -10,9 +10,9 @@ function Resources() {
             <h2 className='text-xl text-gray-500 font-serif'>Explore Our Resources and Workshops</h2>
        </div>  
        <div className='w-full h-min flex justify-center items-center mt-16 mb-16'>
-         {/* <div className='w-1/2 flex items-center justify-center'>
+         <div className='w-1/2 flex items-center justify-center'>
          <Link to="resource" className='text-white font-serif font-bold bg-gray-600 text-xl p-4 rounded-lg'> Resource</Link>
-         </div> */}
+         </div>
        </div>
       <Outlet />
     </div>
