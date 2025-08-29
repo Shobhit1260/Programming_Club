@@ -55,28 +55,29 @@ function Home() {
       </section>
 
       {/* Cards Section */}
-      <section>
-        <div className="w-full dark:bg-gray-800 flex flex-col md:flex-row justify-center items-center gap-6 px-4 pt-24 mb-8">
-          <Cards
-            title="Events"
-            description="Checkout our upcoming events and workshops"
-            buttonText="View Events"
-            link="event"
-          />
-          <Cards
-            title="Resources"
-            description="Access Learning Resources and Tutorials"
-            buttonText="Browse Resources"
-            link="resource"
-          />
-          <Cards
-            title="LeaderBoard"
-            description="See Top performers in LeaderBoard"
-            buttonText="View Ranking"
-            link="leaderboard"
-          />
-        </div>
-      </section>
+      <section className="px-4 pt-16 mb-12">
+  <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-center gap-6">
+    <Cards
+      title="Events"
+      description="Checkout our upcoming events and workshops"
+      buttonText="View Events"
+      link="event"
+    />
+    <Cards
+      title="Resources"
+      description="Access Learning Resources and Tutorials"
+      buttonText="Browse Resources"
+      link="resource"
+    />
+    <Cards
+      title="LeaderBoard"
+      description="See Top performers in LeaderBoard"
+      buttonText="View Ranking"
+      link="leaderboard"
+    />
+  </div>
+</section>
+
     </div>
   );
 }

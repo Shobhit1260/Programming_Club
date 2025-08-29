@@ -17,7 +17,7 @@ function ContactUs() {
 
   return (
     <div className="pt-24 w-full min-h-screen bg-gradient-to-b from-blue-100 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 sm:px-8 md:px-16 py-16 flex justify-center items-center">
-      <div className="w-full max-w-3xl bg-white dark:bg-gray-950 shadow-2xl rounded-2xl px-6 sm:px-10 md:px-14 py-10 transition-all">
+      <div className="w-full max-w-3xl bg-white dark:bg-gray-900 shadow-2xl rounded-2xl px-6 sm:px-10 md:px-14 py-10 transition-all">
         
         {/* Heading */}
         <div className="flex flex-col gap-3 mb-10 text-center">
