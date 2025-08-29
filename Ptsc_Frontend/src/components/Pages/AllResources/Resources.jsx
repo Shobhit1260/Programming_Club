@@ -1,18 +1,24 @@
 import React from 'react'
-import { Link,Outlet } from 'react-router-dom';
-
+import { Outlet } from 'react-router-dom';
 
 function Resources() {
   return (
-    <div className='w-full h-min bg-gradient-to-b from-blue-200 to-white dark:bg-gray-800 dark:from-gray-800 dark:to-gray-800 p-24 '>
-       <div className='w-full h-min flex flex-col justify-center items-center gap-4 mb-16 '>
-            <h1 className='text-4xl text-black dark:text-white font-serif font-bold'>Resources</h1>
-            <h2 className='text-xl text-gray-500 font-serif'>Explore Our Resources and Workshops</h2>
+    <div className='w-full min-h-screen bg-gradient-to-b from-blue-200 to-white 
+      dark:from-gray-800 dark:to-gray-900 transition-colors duration-300 px-4 sm:px-8 py-12'>
+       
+       {/* Heading Section */}
+       <div className='w-full flex flex-col justify-center items-center gap-3 sm:gap-4 mb-10 sm:mb-16 text-center'>
+            <h1 className='text-2xl sm:text-3xl lg:text-4xl text-black dark:text-white font-serif font-bold'>
+              Resources
+            </h1>
+            <h2 className='text-sm sm:text-lg text-gray-600 dark:text-gray-300 font-serif max-w-2xl'>
+              Explore Our Resources and Workshops
+            </h2>
        </div>  
     
       <Outlet />
     </div>
   )
-}
+}  
 
 export default Resources
