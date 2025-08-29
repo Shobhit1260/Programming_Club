@@ -29,9 +29,9 @@ function Login() {
     });
 
     const formData = await res.json();
-    console.log("formData:", formData.role);
+    
     localStorage.setItem("role", formData.role);
-
+    
     if (res.ok) toast.success("Successfully logged in as a PTSC member.");
     else toast.warning(formData.message);
 

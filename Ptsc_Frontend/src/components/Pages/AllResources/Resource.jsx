@@ -97,7 +97,7 @@ useEffect(() => {
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
      
         {currentPageMedia.map(media => (
-         <div key={media._id} className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+         <div key={media._id} className="bg-white min-w-max rounded-xl shadow hover:shadow-lg transition overflow-hidden">
       <div className="relative w-full aspect-video bg-gray-100">
         {media.thumbnailKey && (
           <img onClick={() => setPreview(media)} 
