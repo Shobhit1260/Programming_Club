@@ -21,7 +21,7 @@ import GetAll_Pendings from './components/Admin/Members/GetAll_Pendings.jsx';
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
+    <div className="min-h-screen w-full flex flex-col bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
       <Navbar />
 
       <main className="flex-1 w-full mx-auto ">
@@ -41,7 +41,6 @@ function App() {
             <Route path="workshop" element={<Workshop />} />
           </Route>
 
-         
           <Route path="/admin" element={<Admin />}>
             <Route index element={<Admin_Event />} />
             <Route path="admin_event" element={<Admin_Event />} />

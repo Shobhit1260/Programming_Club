@@ -5,6 +5,7 @@ import { RxCross1 } from "react-icons/rx";
 import { HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
 import { toast } from "react-toastify";
 import BASE from "../../../api/config";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const {
@@ -13,6 +14,7 @@ function Login() {
     formState: { errors, isSubmitting },
     reset,
   } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -30,7 +32,10 @@ function Login() {
     const formData = await res.json();
     localStorage.setItem("role", formData.role);
 
-    if (res.ok) toast.success("Successfully logged in as a PTSC member.");
+    if (res.ok) {
+      toast.success("Successfully logged in as a PTSC member.");
+      navigate("/login");
+    }
     else toast.warning(formData.message);
 
     reset();
