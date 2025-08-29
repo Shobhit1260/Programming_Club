@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import TeamCard from '../Utils/TeamCard';
-
-
-import  BASE  from '../../api/config'
-
+import BASE from '../../api/config';
 
 function Team() {
   const [members, setMembers] = useState([]);
@@ -23,9 +20,9 @@ function Team() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-blue-200 to-white  flex flex-col
+    <div className="min-h-screen w-full bg-gradient-to-b from-blue-200 to-white  
       dark:from-gray-900 dark:to-gray-900 transition-colors duration-300">
-      
+
       {/* Heading Section */}
       <div className="w-full flex flex-col justify-center items-center gap-4 pt-24 px-4 text-center">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-black dark:text-white">
@@ -37,7 +34,7 @@ function Team() {
       </div>
 
       {/* Team Members Grid */}
-      <div className="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-16 pb-16 px-6 md:px-4 lg:px-24">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-16 pb-16 px-6 md:px-12 lg:px-24">
         {members.map((member) => {
           if (!member) return null;
           return (
