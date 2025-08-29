@@ -5,7 +5,7 @@ function TeamCard({ Name, Position, Image }) {
     <div className="dark:bg-gray-900 bg-white shadow-lg rounded-2xl bg-gradient-to-br from-white to-gray-300 dark:from-gray-800 dark:to-gray-900
   p-6 sm:p-8 md:p-10 lg:p-12  
   flex flex-col items-center justify-center gap-4 
-   w-[300px] transition-all duration-300">
+   w-[500px] transition-all duration-300">
       
       <div>
         <img
