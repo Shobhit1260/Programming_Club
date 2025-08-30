@@ -83,11 +83,18 @@ const getLeetCodeUserStats = async (username) => {
 };
 
 const getGfgData = async (gfgId) => {
-  const gfgUrl = `https://geeks-for-geeks-api.vercel.app/${gfgId}`;
+  const gfgUrl = `https://leetcode-gfg-codechef-api.vercel.app/geeksforgeeks/user/${gfgId}/complete`;
   try {
     const response = await axios.get(gfgUrl);
-    if (response.status === 200) {
-      return response.data.info.totalProblemsSolved;
+    if (response.status === 200 && response.data && response.data.success && response.data.data) {
+      const stats = response.data.data.statistics;
+      return {
+        username: response.data.data.username || gfgId,
+        totalSolved: stats?.totalProblemsSolved || 0,
+        easySolved: stats?.easyProblemsSolved || 0,
+        mediumSolved: stats?.mediumProblemsSolved || 0,
+        hardSolved: stats?.hardProblemsSolved || 0,
+      };
     } else {
       throw new Error('Server Error: Unable to fetch GFG data');
     }
@@ -134,25 +141,18 @@ const getCodeForcesData = async (codeforcesId) => {
 
 const getCodeChefData = async (codechefId) => {
   if (codechefId) {
-    const ccUrl = `https://codechef-api.vercel.app/handle/${codechefId}`;
+    const ccUrl = `https://leetcode-gfg-codechef-api.vercel.app/codechef/user/${codechefId}`;
     try {
       const response = await axios.get(ccUrl);
-      if(response.status === 404) return 0;
-      if(response.status === 200){
-        const ratingcc = response.data.currentRating;
-        if(ratingcc === null){
-          return 0; 
-        }
-        return ratingcc;
-      }
-      else{
-        console.log("CodeChef ID:", codechefId);
+      if (response.status === 404) return 0;
+      if (response.status === 200 && response.data && response.data.success) {
+        const ratingcc = response.data.data?.currentRating;
+        return ratingcc ?? 0;
+      } else {
         throw new Error('Server Error: Unable to fetch CodeChef data');
       }
     } catch (error) {
-      console.log("CodeChef ID:", codechefId);
       throw new Error("Server Error: Unable to fetch CodeChef data");
-      
     }
   }
 }

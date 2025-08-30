@@ -37,20 +37,21 @@ exports.updateLeaderboard = async (req, res) => {
         const lastName = student.lastName;
 
         try {
-          const [problemsCountgfg, leetData, ratingcc] = await Promise.all([
+          // Fetch all external platform data in parallel; ensure proper destructuring order.
+          const [gfgData, leetData, ratingcc, ratingcf] = await Promise.all([
             getGfgData(student.gfgId),
             getLeetcodeData(student.leetcodeId),
             getCodeChefData(student.codechefId),
             getCodeForcesData(student.codeforcesId),
           ]);
-          const ratingcf = student.codeforcesId ? await getCodeForcesData(student.codeforcesId) : 0;
 
+          // Map raw fetched data into the numeric fields expected by the scoring system.
           const studentData = {
-            problemsCountgfg,
-            ratingcf,
-            ratingcc,
-            problemsCountlc: leetData.totalSolved,
-            ratinglc: leetData.rating,
+            problemsCountgfg: gfgData?.totalSolved || 0,
+            problemsCountlc: leetData?.totalSolved || 0,
+            ratinglc: leetData?.rating || 0,
+            ratingcf: ratingcf || 0,
+            ratingcc: ratingcc || 0,
             rank: 0,
           };
 
@@ -132,7 +133,7 @@ exports.getLeaderboard = async(req,res) =>{
     try{
 
         const page = parseInt(req.query.page) || 1;
-        let limit = parseInt(req.query.limit) || 10;
+        let limit = parseInt(req.query.limit) || 30;
         limit = Math.min(limit, 50);
         const skip = (page - 1) * limit;
         const leaderboardStudents = await Leaderboard.find().populate("studentId","firstName lastName").sort({ score: -1 }).skip(skip).limit(limit);
