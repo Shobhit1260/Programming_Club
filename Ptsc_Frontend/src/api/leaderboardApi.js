@@ -1,7 +1,7 @@
 import BASE from './config'
 
 export async function addToLeaderboard(payload) {
-  const res = await fetch(`${BASE}/v1/leaderboard/add`, {
+  const res = await fetch(`${BASE}/leaderboard/add`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",

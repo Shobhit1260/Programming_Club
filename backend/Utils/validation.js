@@ -8,16 +8,18 @@ const validategfgCodingPlatform = async (req) => {
         throw new Error('Invalid GFG ID');
     }
     if (gfgId) {
-        const gfgUrl = `https://geeks-for-geeks-api.vercel.app/${gfgId}`;
+        const gfgUrl = `https://leetcode-gfg-codechef-api.vercel.app/geeksforgeeks/user/${gfgId}`;
         try {
             const response = await axios.get(gfgUrl);
-            if (response.data && response.data.info && response.data.info.userName === gfgId) {
+            if (response.status === 200 && response.data.success === true) {
                 return true;
-            } else {
+            } else if (response.data.success === false) {
                 throw new Error('Invalid GFG ID');
+            } else {
+                throw new Error('Server Error: Unable to fetch GFG data');
             }
         } catch (error) {
-            throw new Error('Invalid GFG ID');
+            throw new Error('Server Error: Unable to fetch GFG data');
         }
     }
 }
@@ -34,7 +36,7 @@ const validateCodeForcesCodingPlatform = async (req) => {
             if(response.status === 200 && response.data[0]?.error === "User not found") {
                 throw new Error(response.data.error);
             }
-            else if (response.status === 200 && response.data[0]?.lastName) {
+            else if (response.status === 200 && response.data[0]?.handle===codeforcesId) {
                 console.log("CodeForces ID is valid");
                 return true;
             } else {
@@ -51,25 +53,20 @@ const validateCodeChefCodingPlatform = async (req) => {
     if (!codechefId || typeof codechefId !== 'string') {
         throw new Error('Invalid CodeChef ID');
     }
-    const ccUrl = `https://competeapi.vercel.app/user/codechef/${codechefId}`;
+    const ccUrl = `https://leetcode-gfg-codechef-api.vercel.app/codechef/user/${codechefId}`;
     try {
         const response = await axios.get(ccUrl);
-        if (response.status === 200 && response.data?.error === "User not found") {
-           console.log("PROBLEM IS HERE 1");
-           throw new Error(response.data.error);
-        } else if (
-            response.status === 200  &&
-            response.data &&
-            response.data.username
-        ) {
+
+        console.log(response.data);
+        if(response.status === 200 && response.data.success === false) {
+            throw new Error('Invalid CodeChef ID');
+        } else if (response.data.success === true) {
             return true;
         } else {
-            console.log("PROBLEM IS HERE 2");
             throw new Error("Server Error: Unable to fetch CodeChef data");
         }
     } catch (error) {
-        console.log("PROBLEM IS HERE 3");
-        throw new Error(error.message);
+        throw new Error("Server Error: Unable to fetch CodeChef data");
     }
 }
 

@@ -13,8 +13,14 @@ const weights = {
   problemsCountgfg: 15,
 };
 const normalize = async (value, min, max) => {
-      const normalized = ((value - min) / (max - min)) * 100;
-      return Math.min(Math.max(normalized, 0), 100); 
+  // Guard: if min/max invalid, return 0 to avoid NaN propagation.
+  if (typeof min !== 'number' || typeof max !== 'number' || !isFinite(min) || !isFinite(max) || max === min) {
+    return 0;
+  }
+  const num = Number(value);
+  if (!isFinite(num)) return 0;
+  const normalized = ((num - min) / (max - min)) * 100;
+  return Math.min(Math.max(normalized, 0), 100);
 }
 
 const calculateStudentScore = async (student) => {
@@ -23,12 +29,18 @@ const calculateStudentScore = async (student) => {
 
     let finalScore = 0;
     for (const metric in weights) {
-      const { min, max } = await fixedMinMax[metric];
-      const value = await student[metric] || 0; // Default to 0 if undefined
-      const normalized = await normalize(value, min, max);
-      finalScore +=  (normalized * (weights[metric] / 100));
+      const config = fixedMinMax[metric];
+      if (!config) continue; // skip unknown metric
+      const { min, max } = config;
+      const rawValue = student[metric];
+      const numericValue = Number(rawValue);
+      const normalized = await normalize(numericValue, min, max);
+      const weightPortion = Number(weights[metric]) / 100;
+      if (isFinite(normalized) && isFinite(weightPortion)) {
+        finalScore += normalized * weightPortion;
+      }
     }
-    
+    if (!isFinite(finalScore)) finalScore = 0;
     return parseFloat(finalScore.toFixed(2)); // Return score rounded to 2 decimal places
   }
   catch(err){
