@@ -1,5 +1,6 @@
 // src/components/leaderboard/AddToLeaderboardForm.jsx
 import React, { useState } from "react";
+import BASE from "../../api/config";
 import axios from "axios";
 
 export default function AddToLeaderboardForm({ onClose }) {
@@ -26,7 +27,7 @@ export default function AddToLeaderboardForm({ onClose }) {
     setMsg(null);
     setBusy(true);
     try {
-      const res = await axios.post('http://localhost:4000/leaderboard/add', form, {
+      const res = await axios.post(`${BASE}/leaderboard/add`, form, {
         withCredentials: true
       });
       setMsg({ type: "success", text: res?.message || "Submitted!" });
