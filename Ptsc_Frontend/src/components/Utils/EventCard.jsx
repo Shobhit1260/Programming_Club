@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function EventCard({ Title, Description, Year, Month, date, Time, time }) {
+function EventCard({ Title, Description, Year, Month, date, Time, time, googleFormLink }) {
   const [desc, setDesc] = useState("Upcoming");
 
   useEffect(() => {
@@ -11,7 +11,7 @@ function EventCard({ Title, Description, Year, Month, date, Time, time }) {
   }, [time]);
 
   const openForm = () => {
-    window.open("https://forms.gle/3d1b7c5f8Z2g4j6aA", "_blank");
+    window.open(googleFormLink, "_blank");
   };
 
   return (
