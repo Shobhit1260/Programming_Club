@@ -19,9 +19,6 @@ app.use(cors({
   credentials: true
 }));
 app.use(cookieParser());
-app.use((req, res, next) => {
-    res.status(404).json({ message: "SERVER IS WORKING" });
-});
 app.use("/v1",routes);
 app.use("/v1",routesupload);
 app.use("/",routesleaderboard);

@@ -179,7 +179,7 @@ exports.logout=async(req,res)=>{
 
 exports.createEvent=async(req,res)=>{
   try{
-     const {title,description,date,time,status}=req.body;
+     const {title,description,date,time,status,googleFormLink}=req.body;
      const dulpEvent=await Event.findOne({title});
      if(dulpEvent){
       return res.status(409).json({
@@ -187,7 +187,7 @@ exports.createEvent=async(req,res)=>{
         message:"Duplicate title not allowed."
       })
      }
-     const event = await Event.create({title,description,date,time,status});
+     const event = await Event.create({title,description,date,time,status,googleFormLink});
      res.status(200).json({
        success:true,
        event,
@@ -201,10 +201,10 @@ exports.createEvent=async(req,res)=>{
 
 exports.editEvent=async(req,res)=>{
   try{
-     const {title,description,date,status}=req.body;
+     const {title,description,date,status,googleFormLink}=req.body;
      const {id}=req.params;
      const event = await Event.findByIdAndUpdate(id,{
-      $set:{title:title,description:description,date:date,status:status}
+      $set:{title:title,description:description,date:date,status:status,googleFormLink:googleFormLink}
      },
      {new:true});
      res.status(201).json({

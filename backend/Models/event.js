@@ -19,6 +19,9 @@ const eventSchema= new mongoose.Schema({
    },
    status:{
     type:String,
+   },
+   googleFormLink:{
+    type:String,
    }
 })
 module.exports=mongoose.model("Event",eventSchema);
