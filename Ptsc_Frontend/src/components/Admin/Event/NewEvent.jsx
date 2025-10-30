@@ -12,6 +12,7 @@ function NewEvent({fetchData}) {
     date: "",
     time: "",
     status: "Upcoming",
+    googleFormLink: "",
   });
 
   const handleFormData = (e) => {
@@ -103,6 +104,18 @@ function NewEvent({fetchData}) {
           className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 
                      bg-gray-50 dark:bg-gray-800 
                      text-gray-900 dark:text-gray-200 
+                     focus:ring-2 focus:ring-cyan-400 outline-none transition"
+        />
+        <input
+          type="text"
+          name="googleFormLink"
+          value={formData.googleFormLink}
+          onChange={handleFormData}
+          placeholder="Google Form Link"
+          className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 
+                     bg-gray-50 dark:bg-gray-800 
+                     text-gray-900 dark:text-gray-200 
+                     placeholder-gray-400 dark:placeholder-gray-500 
                      focus:ring-2 focus:ring-cyan-400 outline-none transition"
         />
 

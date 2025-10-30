@@ -8,21 +8,25 @@ function Events() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async () => {
-    try {
-      const res = await fetch(`${BASE}/v1/fetchEvents`);
-      const data = await res.json();
-      setEvents(data.events || []);
-    } catch (error) {
-      console.error("Failed to fetch events:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    let mounted = true;
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`${BASE}/v1/fetchEvents`);
+        const data = await res.json();
+        if (mounted) setEvents(data.events || []);
+      } catch (error) {
+        console.error("Failed to fetch events:", error);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+
     fetchData();
-  }, [fetchData]);
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-b from-blue-200 to-white 
@@ -61,6 +65,7 @@ function Events() {
                 Month={eventDate.toLocaleString("default", { month: "long" })}
                 Time={`Time: ${event.time}`}
                 time={event.date}
+                googleFormLink={event.googleFormLink}
               />
             );
           })
