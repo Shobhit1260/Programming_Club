@@ -15,7 +15,7 @@ const port=process.env.PORT||4000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: ["https://programming-club-website.onrender.com", "http://localhost:5173" , "https://quickchat-frontend-rs8b.onrender.com"],
+  origin: ["https://programming-club-website.onrender.com", "http://localhost:5173" , "https://quickchat-frontend-rs8b.onrender.com" , "https://ptsc-frontend.vercel.app"],
   credentials: true
 }));
 app.use(cookieParser());
