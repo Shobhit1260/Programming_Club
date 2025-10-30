@@ -1,3 +1,3 @@
-const BASE="https://programming-club-46ae.onrender.com";
+const BASE="https://quickchat-backend-sg72.onrender.com";
 
 export default BASE;
