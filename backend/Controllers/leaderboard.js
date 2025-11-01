@@ -137,11 +137,16 @@ exports.getLeaderboard = async(req,res) =>{
         limit = Math.min(limit, 50);
         const skip = (page - 1) * limit;
         const leaderboardStudents = await Leaderboard.find().populate("studentId","firstName lastName").sort({ score: -1 }).skip(skip).limit(limit);
+        
         if(leaderboardStudents){
             const result = leaderboardStudents.map(student => ({
                 name: student.studentId.firstName + " " + student.studentId.lastName,
                 rank: student.rank,
                 score: student.score,
+                leetcodeSolved: student.problemsCountlc,
+                codeforcesRating: student.ratingcf,
+                codechefRating: student.ratingcc,
+                gfgSolved: student.problemsCountgfg,
             }));
             res.status(200).send(result);
         }
