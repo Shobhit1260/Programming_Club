@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {SignUp,Login,getallpendings,getAllApprovedMembers,approveUser,deniedUser, 
-       logout, createEvent, fetchEvents, createMember, editEvent, deleteEvent, 
-       fetchMembers,editMember,deleteMember, getAllUsers, updateUserRole} = require('../Controllers/adminController');
+       logout, createEvent, fetchEvents, fetchEventById, createMember, editEvent, deleteEvent, 
+       fetchMembers,editMember,deleteMember, getAllUsers, updateUserRole, registerEvent, listRegistrations} = require('../Controllers/adminController');
 
 const {isAuthenticated} = require('../Middlewares/isAuthenticated');
 const  {authorizeRoles}=require('../Middlewares/isAuthorization');
@@ -18,10 +18,13 @@ router.post("/createEvent",isAuthenticated,authorizeRoles("admin"),createEvent);
 router.patch("/editEvent/:id",isAuthenticated,authorizeRoles("admin"),editEvent);
 router.delete("/deleteEvent/:id",isAuthenticated,authorizeRoles("admin"),deleteEvent);
 router.get("/fetchEvents",fetchEvents);
+router.get("/events/:id",fetchEventById);
+router.post("/registerEvent",registerEvent);
 router.get("/fetchMembers",fetchMembers);
 router.post("/createMember",isAuthenticated,authorizeRoles("admin"),createMember);
 router.patch("/editMember/:id",isAuthenticated,authorizeRoles("admin"),editMember);
 router.delete("/deleteMember/:id",isAuthenticated,authorizeRoles("admin"),deleteMember);
+router.get("/registrations",isAuthenticated,authorizeRoles("admin"),listRegistrations);
 
 // Admin user management
 router.get("/getAllUsers",isAuthenticated,authorizeRoles("admin"),getAllUsers);

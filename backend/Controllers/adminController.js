@@ -3,6 +3,7 @@ const User=require("../Models/user.js")
 const {sendToken}=require("../Utils/sendToken")
 const Event = require("../Models/event.js");
 const MemberProfile=require("../Models/memberProfile.js")
+const EventRegistration = require("../Models/eventRegistration.js");
 
 exports.SignUp=async(req,res)=>{
   try{
@@ -179,7 +180,7 @@ exports.logout=async(req,res)=>{
 
 exports.createEvent=async(req,res)=>{
   try{
-     const {title,description,date,time,status,googleFormLink}=req.body;
+     const {title,description,date,time,status,googleFormLink,useCustomForm,registrationFields}=req.body;
      const dulpEvent=await Event.findOne({title});
      if(dulpEvent){
       return res.status(409).json({
@@ -187,7 +188,16 @@ exports.createEvent=async(req,res)=>{
         message:"Duplicate title not allowed."
       })
      }
-     const event = await Event.create({title,description,date,time,status,googleFormLink});
+     const event = await Event.create({
+       title,
+       description,
+       date,
+       time,
+       status,
+       googleFormLink,
+       useCustomForm: Boolean(useCustomForm),
+       registrationFields: Array.isArray(registrationFields) ? registrationFields : [],
+     });
      res.status(200).json({
        success:true,
        event,
@@ -201,10 +211,19 @@ exports.createEvent=async(req,res)=>{
 
 exports.editEvent=async(req,res)=>{
   try{
-     const {title,description,date,status,googleFormLink}=req.body;
+     const {title,description,date,status,googleFormLink,time,useCustomForm,registrationFields}=req.body;
      const {id}=req.params;
      const event = await Event.findByIdAndUpdate(id,{
-      $set:{title:title,description:description,date:date,status:status,googleFormLink:googleFormLink}
+      $set:{
+        title,
+        description,
+        date,
+        status,
+        googleFormLink,
+        time,
+        useCustomForm: Boolean(useCustomForm),
+        registrationFields: Array.isArray(registrationFields) ? registrationFields : [],
+      }
      },
      {new:true});
      res.status(201).json({
@@ -251,6 +270,20 @@ exports.fetchEvents=async(req,res)=>{
   }
   catch(error){
       res.status(500).json({ message: "internal server error" });
+  }
+}
+
+// Fetch single event by ID (public)
+exports.fetchEventById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const event = await Event.findById(id);
+    if (!event) {
+      return res.status(404).json({ success: false, message: 'Event not found' });
+    }
+    res.status(200).json({ success: true, event });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'internal server error' });
   }
 }
 
@@ -349,6 +382,47 @@ exports.getAllUsers = async (req, res) => {
       success: false,
       message: 'Internal server error',
     });
+  }
+};
+
+// Create event registration (public) with deadline enforcement
+exports.registerEvent = async (req, res) => {
+  try {
+    const { eventId, name, gender, rollNo, contactNo, ...dynamic } = req.body;
+    const event = await Event.findById(eventId);
+    if (!event) {
+      return res.status(404).json({ success: false, message: 'Event not found' });
+    }
+    // Deadline check against event.date
+    if (event.date && new Date() > new Date(event.date)) {
+      return res.status(400).json({ success: false, message: 'Registration deadline has passed' });
+    }
+    // Save registration
+    const reg = await EventRegistration.create({
+      eventId,
+      name,
+      gender,
+      rollNo,
+      contactNo,
+      dynamic,
+    });
+    res.status(201).json({ success: true, registration: reg, message: 'Registered successfully' });
+  } catch (error) {
+    console.error('registerEvent error:', error);
+    res.status(500).json({ success: false, message: 'internal server error' });
+  }
+};
+
+// Admin: list all registrations or by event
+exports.listRegistrations = async (req, res) => {
+  try {
+    const { eventId } = req.query;
+    const filter = eventId ? { eventId } : {};
+    const regs = await EventRegistration.find(filter).sort({ createdAt: -1 });
+    res.status(200).json({ success: true, count: regs.length, registrations: regs });
+  } catch (error) {
+    console.error('listRegistrations error:', error);
+    res.status(500).json({ success: false, message: 'internal server error' });
   }
 };
 
