@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {SignUp,Login,getallpendings,getAllApprovedMembers,approveUser,deniedUser, 
        logout, createEvent, fetchEvents, createMember, editEvent, deleteEvent, 
-       fetchMembers,editMember,deleteMember} = require('../Controllers/adminController');
+       fetchMembers,editMember,deleteMember, getAllUsers, updateUserRole} = require('../Controllers/adminController');
 
 const {isAuthenticated} = require('../Middlewares/isAuthenticated');
 const  {authorizeRoles}=require('../Middlewares/isAuthorization');
@@ -22,6 +22,10 @@ router.get("/fetchMembers",fetchMembers);
 router.post("/createMember",isAuthenticated,authorizeRoles("admin"),createMember);
 router.patch("/editMember/:id",isAuthenticated,authorizeRoles("admin"),editMember);
 router.delete("/deleteMember/:id",isAuthenticated,authorizeRoles("admin"),deleteMember);
+
+// Admin user management
+router.get("/getAllUsers",isAuthenticated,authorizeRoles("admin"),getAllUsers);
+router.patch("/updateUser/:id",isAuthenticated,authorizeRoles("admin"),updateUserRole);
 
 
 module.exports=router;
