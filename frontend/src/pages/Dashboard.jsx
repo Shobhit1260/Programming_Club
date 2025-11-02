@@ -11,7 +11,9 @@ import {
   Trash2,
   Edit,
   Plus,
-  Clock
+  Clock,
+  ChevronDown,
+  ChevronRight
 } from 'lucide-react';
 import api from '../utils/api';
 import { toast } from 'react-toastify';
@@ -39,6 +41,7 @@ export default function Dashboard() {
   const [selectedEventId, setSelectedEventId] = useState('');
   const [showEditEvent, setShowEditEvent] = useState(false);
   const [editingEvent, setEditingEvent] = useState(null);
+  const [expandedRows, setExpandedRows] = useState(new Set());
 
   useEffect(() => {
     if (activeTab === 'users') {
@@ -52,7 +55,10 @@ export default function Dashboard() {
     } else if (activeTab === 'members') {
       if (isAdmin) fetchMembers();
     } else if (activeTab === 'registrations') {
-      if (isAdmin) fetchRegistrations(selectedEventId);
+      if (isAdmin) {
+        fetchEvents(); // Fetch events first to populate event names
+        fetchRegistrations(selectedEventId);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab, isAdmin]);
@@ -83,6 +89,7 @@ export default function Dashboard() {
       setLoading(true);
       const res = await api.get('/v1/registrations', { params: eventId ? { eventId } : {} });
       const data = Array.isArray(res?.data?.registrations) ? res.data.registrations : [];
+      console.log(data);
       setRegistrations(data);
     } catch (error) {
       console.error('Error fetching registrations:', error);
@@ -191,6 +198,25 @@ export default function Dashboard() {
     { id: 'leaderboard', label: 'Leaderboard', icon: RefreshCw },
   ];
   const visibleTabs = isAdmin ? tabs : tabs.filter(t => !['users','members','registrations'].includes(t.id));
+
+  // Helper function to get event name from eventId
+  const getEventName = (eventId) => {
+    const event = events.find(e => e._id === eventId);
+    return event?.title || event?.name || eventId;
+  };
+
+  // Toggle expanded row for dynamic fields
+  const toggleRow = (registrationId) => {
+    setExpandedRows(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(registrationId)) {
+        newSet.delete(registrationId);
+      } else {
+        newSet.add(registrationId);
+      }
+      return newSet;
+    });
+  };
 
   return (
     <div className="min-h-screen pt-24 pb-12">
@@ -499,7 +525,18 @@ export default function Dashboard() {
           {activeTab === 'registrations' && isAdmin && (
             <div>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-3">
-                <h2 className="text-2xl font-bold text-white">Event Registrations</h2>
+                <div>
+                  <h2 className="text-2xl font-bold text-white">Event Registrations</h2>
+                  {selectedEventId ? (
+                    <p className="text-sm text-gray-400 mt-1">
+                      Showing registrations for: <span className="text-primary font-semibold">{getEventName(selectedEventId)}</span>
+                    </p>
+                  ) : (
+                    <p className="text-sm text-gray-400 mt-1">
+                      Showing all registrations ({registrations.length})
+                    </p>
+                  )}
+                </div>
                 <div className="flex items-center gap-2">
                   <select
                     className="px-3 py-2 bg-dark/50 rounded text-white text-sm focus:outline-none focus:border-primary/50 border border-white/10"
@@ -535,19 +572,59 @@ export default function Dashboard() {
                         <th className="px-4 py-3 text-left text-sm font-semibold text-gray-400">Contact</th>
                         <th className="px-4 py-3 text-left text-sm font-semibold text-gray-400">Event</th>
                         <th className="px-4 py-3 text-left text-sm font-semibold text-gray-400">Submitted</th>
+                        <th className="px-4 py-3 text-left text-sm font-semibold text-gray-400">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {registrations.map((r) => (
-                        <tr key={r._id} className="border-b border-white/5 hover:bg-white/5">
-                          <td className="px-4 py-3 text-white">{r.name}</td>
-                          <td className="px-4 py-3 text-gray-400">{r.gender}</td>
-                          <td className="px-4 py-3 text-gray-400">{r.rollNo}</td>
-                          <td className="px-4 py-3 text-gray-400">{r.contactNo}</td>
-                          <td className="px-4 py-3 text-gray-400">{r.eventId}</td>
-                          <td className="px-4 py-3 text-gray-400">{new Date(r.createdAt).toLocaleString()}</td>
-                        </tr>
-                      ))}
+                      {registrations.map((r) => {
+                        const isExpanded = expandedRows.has(r._id);
+                        const hasDynamic = r.dynamic && Object.keys(r.dynamic).length > 0;
+                        
+                        return (
+                          <>
+                            <tr key={r._id} className="border-b border-white/5 hover:bg-white/5">
+                              <td className="px-4 py-3 text-white">{r.name}</td>
+                              <td className="px-4 py-3 text-gray-400">{r.gender}</td>
+                              <td className="px-4 py-3 text-gray-400">{r.rollNo}</td>
+                              <td className="px-4 py-3 text-gray-400">{r.contactNo}</td>
+                              <td className="px-4 py-3 text-gray-400">{getEventName(r.eventId)}</td>
+                              <td className="px-4 py-3 text-gray-400">{new Date(r.createdAt).toLocaleString()}</td>
+                              <td className="px-4 py-3">
+                                {hasDynamic && (
+                                  <button
+                                    onClick={() => toggleRow(r._id)}
+                                    className="p-1 rounded hover:bg-white/10 transition-all"
+                                    title="View additional fields"
+                                  >
+                                    {isExpanded ? (
+                                      <ChevronDown className="w-5 h-5 text-primary" />
+                                    ) : (
+                                      <ChevronRight className="w-5 h-5 text-gray-400" />
+                                    )}
+                                  </button>
+                                )}
+                              </td>
+                            </tr>
+                            {isExpanded && hasDynamic && (
+                              <tr key={`${r._id}-expanded`} className="border-b border-white/5 bg-white/5">
+                                <td colSpan="7" className="px-4 py-4">
+                                  <div className="glass-effect rounded-lg p-4">
+                                    <h4 className="text-sm font-semibold text-primary mb-3">Additional Information</h4>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                      {Object.entries(r.dynamic).map(([key, value]) => (
+                                        <div key={key} className="bg-dark/30 rounded-lg p-3">
+                                          <p className="text-xs text-gray-400 mb-1">{key}</p>
+                                          <p className="text-sm text-white break-words">{value}</p>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            )}
+                          </>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
