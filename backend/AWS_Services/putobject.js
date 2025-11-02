@@ -1,4 +1,4 @@
-const { PutObjectCommand, S3Client ,GetObjectCommand,DeleteObjectCommand,DeleteObjectsCommand } =require( "@aws-sdk/client-s3");
+const { PutObjectCommand, S3Client ,GetObjectCommand,DeleteObjectCommand,DeleteObjectsCommand, HeadObjectCommand } =require( "@aws-sdk/client-s3");
 const { getSignedUrl } =require( "@aws-sdk/s3-request-presigner");
 const {v4 :uuidv4} =require("uuid");
 const Media=require("../Models/media");
@@ -106,18 +106,35 @@ exports.DownloadMediafromS3=async(req,res)=>{
             Key: media.s3Key,
             ResponseContentDisposition: 'attachment'
         });
+        // Verify object exists before generating signed URL to provide clearer errors
+        try {
+          await s3Client.send(new HeadObjectCommand({ Bucket: process.env.AWS_BUCKET_NAME, Key: media.s3Key }));
+        } catch (headErr) {
+          console.error('HeadObject failed for', media.s3Key, headErr);
+          return res.status(404).json({ success: false, message: 'Media object not found in S3', error: headErr.message || headErr });
+        }
 
-         const command2 = new GetObjectCommand({
-            Bucket: process.env.AWS_BUCKET_NAME,
-            Key: media.thumbnailKey || '',
-        });
-        const downloadURLforMedia = await getSignedUrl(s3Client, command1,{ expiresIn: 3600 });
-        const downloadURLforThumbnail = await getSignedUrl(s3Client, command2,{ expiresIn: 3600 });
+        const downloadURLforMedia = await getSignedUrl(s3Client, command1, { expiresIn: 3600 });
+        console.log("Generated download URL:", downloadURLforMedia);
+        // Only generate a thumbnail signed URL when thumbnailKey exists
+        let downloadURLforThumbnail = null;
+        if (media.thumbnailKey) {
+          try {
+            const command2 = new GetObjectCommand({
+              Bucket: process.env.AWS_BUCKET_NAME,
+              Key: media.thumbnailKey,
+            });
+            downloadURLforThumbnail = await getSignedUrl(s3Client, command2, { expiresIn: 3600 });
+          } catch (thumbErr) {
+            console.warn('Failed to generate thumbnail signed URL for', media._id, thumbErr);
+            downloadURLforThumbnail = null;
+          }
+        }
 
-        res.status(200).json({
-            success: true,
-            downloadURLforMedia: downloadURLforMedia,
-            downloadURLforThumbnail:downloadURLforThumbnail
+        return res.status(200).json({
+          success: true,
+          downloadURLforMedia: downloadURLforMedia,
+          downloadURLforThumbnail: downloadURLforThumbnail,
         });
       }
       catch(error){
