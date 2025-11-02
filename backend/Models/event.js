@@ -34,6 +34,12 @@ const eventSchema= new mongoose.Schema({
    googleFormLink:{
     type:String,
    },
+   whatsappGroupLink: {
+     type: String,
+   },
+   coverImageUrl: {
+     type: String,
+   },
    useCustomForm: {
      type: Boolean,
      default: false,

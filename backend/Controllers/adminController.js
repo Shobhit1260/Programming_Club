@@ -180,7 +180,7 @@ exports.logout=async(req,res)=>{
 
 exports.createEvent=async(req,res)=>{
   try{
-     const {title,description,date,time,status,googleFormLink,useCustomForm,registrationFields}=req.body;
+  const {title,description,date,time,status,googleFormLink,whatsappGroupLink,coverImageUrl,useCustomForm,registrationFields}=req.body;
      const dulpEvent=await Event.findOne({title});
      if(dulpEvent){
       return res.status(409).json({
@@ -195,6 +195,8 @@ exports.createEvent=async(req,res)=>{
        time,
        status,
        googleFormLink,
+  whatsappGroupLink,
+  coverImageUrl,
        useCustomForm: Boolean(useCustomForm),
        registrationFields: Array.isArray(registrationFields) ? registrationFields : [],
      });
@@ -211,7 +213,7 @@ exports.createEvent=async(req,res)=>{
 
 exports.editEvent=async(req,res)=>{
   try{
-     const {title,description,date,status,googleFormLink,time,useCustomForm,registrationFields}=req.body;
+  const {title,description,date,status,googleFormLink,whatsappGroupLink,coverImageUrl,time,useCustomForm,registrationFields}=req.body;
      const {id}=req.params;
      const event = await Event.findByIdAndUpdate(id,{
       $set:{
@@ -220,6 +222,8 @@ exports.editEvent=async(req,res)=>{
         date,
         status,
         googleFormLink,
+  whatsappGroupLink,
+  coverImageUrl,
         time,
         useCustomForm: Boolean(useCustomForm),
         registrationFields: Array.isArray(registrationFields) ? registrationFields : [],
@@ -398,7 +402,7 @@ exports.registerEvent = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Registration deadline has passed' });
     }
     // Save registration
-    const reg = await EventRegistration.create({
+  const reg = await EventRegistration.create({
       eventId,
       name,
       gender,
@@ -406,7 +410,7 @@ exports.registerEvent = async (req, res) => {
       contactNo,
       dynamic,
     });
-    res.status(201).json({ success: true, registration: reg, message: 'Registered successfully' });
+  res.status(201).json({ success: true, registration: reg, whatsappGroupLink: event.whatsappGroupLink || null, message: 'Registered successfully' });
   } catch (error) {
     console.error('registerEvent error:', error);
     res.status(500).json({ success: false, message: 'internal server error' });
