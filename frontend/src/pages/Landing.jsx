@@ -4,6 +4,7 @@ import { Code2, Users, Trophy, Calendar, ArrowRight, Sparkles } from 'lucide-rea
 import { useEffect, useState } from 'react';
 import api from '../utils/api';
 import CountdownTimer from '../components/CountdownTimer';
+import logo from '../assets/logo.png';
 
 export default function Landing() {
   const [typedText, setTypedText] = useState('');
@@ -54,10 +55,10 @@ export default function Landing() {
   };
 
   const stats = [
-    { icon: Users, value: '500+', label: 'Active Members' },
-    { icon: Trophy, value: '50+', label: 'Competitions' },
-    { icon: Calendar, value: '100+', label: 'Events Hosted' },
-    { icon: Code2, value: '1000+', label: 'Problems Solved' },
+    { icon: Users, value: '30+', label: 'Active Members' },
+    { icon: Trophy, value: '20+', label: 'Competitions' },
+    { icon: Calendar, value: '25+', label: 'Events Hosted' },
+    { icon: Code2, value: '100+', label: 'Curated Problems' },
   ];
 
   const features = [
@@ -126,9 +127,7 @@ export default function Landing() {
               transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
               className="flex justify-center"
             >
-              <div className="p-6 rounded-full glass-effect border-2 border-primary/50">
-                <Code2 className="w-16 h-16 text-primary" />
-              </div>
+                <img src={logo} alt="PTSC logo" className="w-40 h-40 object-contain" />
             </motion.div>
 
             {/* Title with Typewriter Effect */}

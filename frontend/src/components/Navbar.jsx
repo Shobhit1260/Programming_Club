@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Code2, LogOut } from 'lucide-react';
+import logo from '../assets/logo.png';
 // Use the same AuthContext provider that wraps the app (src/context/AuthContext)
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
@@ -52,7 +53,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <Code2 className="w-8 h-8 text-primary group-hover:text-accent transition-colors" />
+            <img src={logo} alt="PTSC logo" className="w-16 h-16 object-contain" />
             <span className="text-xl md:text-2xl font-bold font-display">
               <span className="text-gradient">PTSC</span>
             </span>
